@@ -1,16 +1,21 @@
+## install service
+
+* kibana http://docker_host:8080/
+* [plugin] elastic HQ http://docker_host:9200/_plugin/HQ/
+* [plugin] elastic Head http://docker_host:9200/_plugin/head/
+
+
+
+
 ## Build log v140925
 
 * support [royrusso/elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
+* support [mobz/elasticsearch-head](https://github.com/mobz/elasticsearch-head)
 
 ```
 $ sudo docker build -t y12docker/elasticsearch .
 $ sudo docker run -d -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
 ```
-
-test elasticsearch-HQ
-
-http://docker_host:9200/_plugin/HQ/
-
 
 ## Build log v140924
 

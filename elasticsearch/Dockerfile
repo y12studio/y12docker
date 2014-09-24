@@ -42,6 +42,7 @@ ADD logstash.conf $LS_CONF
 #
 # enable elasticsearch plugin
 #
+RUN /opt/elasticsearch/bin/plugin -install mobz/elasticsearch-head
 RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
 
 CMD ["/sbin/my_init"]
