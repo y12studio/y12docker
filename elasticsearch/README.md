@@ -2,7 +2,6 @@ Build log
 
 ```
 $ sudo docker build -t y12docker/elasticsearch .
-$ sudo docker run -d y12docker/elasticsearch
 $ sudo docker run -d -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
 ```
 test kibana
