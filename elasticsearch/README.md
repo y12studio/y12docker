@@ -1,10 +1,24 @@
-Build log
+## Build log v140925
+
+* support [royrusso/elasticsearch-HQ](https://github.com/royrusso/elasticsearch-HQ)
 
 ```
 $ sudo docker build -t y12docker/elasticsearch .
 $ sudo docker run -d -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
 ```
-test kibana
+
+test elasticsearch-HQ
+
+http://docker_host:9200/_plugin/HQ/
+
+
+## Build log v140924
+
+```
+$ sudo docker build -t y12docker/elasticsearch .
+$ sudo docker run -d -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
+```
+test kibana http://docker_host:8080/
 
 ```
 $ curl -v http://192.168.99.38:8080/

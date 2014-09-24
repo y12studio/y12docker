@@ -39,5 +39,10 @@ ADD logstash.conf $LS_CONF
 # RUN cd /opt/kibana/app/dashboards && cp default.json default.json.bak
 # ADD kibana.json /opt/kibana/app/dashboards/default.json
 
+#
+# enable elasticsearch plugin
+#
+RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
+
 CMD ["/sbin/my_init"]
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
