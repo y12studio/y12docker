@@ -5,7 +5,44 @@
 * [plugin] elastic Head http://docker_host:9200/_plugin/head/
 
 
+## build log v140926
 
+```
+$ date
+Fri Sep 26 11:53:08 CST 2014
+$ sudo docker build --no-cache -t y12docker/elasticsearch .
+$ sudo docker run -d -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
+b78c1f2c4d3634f6ef055ab007bba84c82ea7c0bf37db5e783eec63e34eea660
+
+$ curl -v http://192.168.99.2:9200
+* Rebuilt URL to: http://192.168.99.2:9200/
+* Hostname was NOT found in DNS cache
+*   Trying 192.168.99.2...
+* Connected to 192.168.99.2 (192.168.99.2) port 9200 (#0)
+> GET / HTTP/1.1
+> User-Agent: curl/7.35.0
+> Host: 192.168.99.2:9200
+> Accept: */*
+>
+< HTTP/1.1 200 OK
+< Content-Type: application/json; charset=UTF-8
+< Content-Length: 294
+<
+{
+  "status" : 200,
+  "name" : "Rebel",
+  "version" : {
+    "number" : "1.3.2",
+    "build_hash" : "dee175dbe2f254f3f26992f5d7591939aaefd12f",
+    "build_timestamp" : "2014-08-13T14:29:30Z",
+    "build_snapshot" : false,
+    "lucene_version" : "4.9"
+  },
+  "tagline" : "You Know, for Search"
+}
+* Connection #0 to host 192.168.99.2 left intact
+
+```
 
 ## Build log v140925
 

@@ -3,6 +3,7 @@ MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
 # add our user and group first
 RUN groupadd -r elk && useradd -r -g elk elk
+RUN apt-get -yq update && apt-get install -yq nginx
 
 #
 # Install ElasticSearch.
@@ -14,16 +15,14 @@ ENV ES_SRV /etc/service/elasticsearch/run
 ADD elasticsearch.sh $ES_SRV
 RUN chmod +x $ES_SRV
 
-
 #
 # Install kibana
 #
 RUN wget -qO- https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz | tar xvz -C /tmp &&\
     mv /tmp/kibana-* /opt/kibana && chown www-data:www-data /opt/kibana
 #
-# Install nginx
+# conf nginx
 #
-RUN apt-get -yq update && apt-get install -yq nginx
 ENV NGINX_SRV /etc/service/nginx/run
 ADD nginx.sh $NGINX_SRV
 RUN chmod +x $NGINX_SRV
