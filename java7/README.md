@@ -1,5 +1,16 @@
 Build log
 
+move to y12docker/pbase
+
+```
+$ date
+Fri Sep 26 10:13:07 CST 2014
+$ sudo docker build -t y12docker/java7 .
+
+```
+
+-----------------------
+
 ```
 $ sudo docker build -t y12docker/java7 .
 $ sudo docker run y12docker/java7 java -version
