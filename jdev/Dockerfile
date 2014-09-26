@@ -1,7 +1,7 @@
-FROM y12docker/java7
+FROM y12docker/java8
 
 RUN apt-get -yq update
-RUN apt-get install -yq build-essential unzip
+RUN apt-get install -yq build-essential
 #
 # install maven
 #
@@ -23,11 +23,6 @@ RUN wget -qO- https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}
     mv /tmp/gradle-* $GRADLE_HOME
 
 ENV PATH $PATH:$JAVA_HOME/bin:$M2:$GRADLE_HOME/bin
-
-#
-# install pip
-#
-RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
 #
 # Install Node.js
 # 

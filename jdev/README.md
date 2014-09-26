@@ -1,6 +1,42 @@
 Build log
 
 ```
+$ date
+Fri Sep 26 10:45:47 CST 2014
+$ sudo docker build -t y12docker/jdev .
+
+$ sudo docker run y12docker/jdev java -version
+java version "1.8.0_20"
+Java(TM) SE Runtime Environment (build 1.8.0_20-b26)
+Java HotSpot(TM) 64-Bit Server VM (build 25.20-b23, mixed mode)
+
+$ sudo docker run y12docker/jdev mvn -version
+Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T20:58:10+00:00)
+Maven home: /opt/maven
+Java version: 1.8.0_20, vendor: Oracle Corporation
+Java home: /usr/lib/jvm/java-8-oracle/jre
+Default locale: zh_TW, platform encoding: UTF-8
+OS name: "linux", version: "3.13.0-24-generic", arch: "amd64", family: "unix"
+
+$ sudo docker run y12docker/jdev gradle -v
+
+------------------------------------------------------------
+Gradle 2.1
+------------------------------------------------------------
+
+Build time:   2014-09-08 10:40:39 UTC
+Build number: none
+Revision:     e6cf70745ac11fa943e19294d19a2c527a669a53
+
+Groovy:       2.3.6
+Ant:          Apache Ant(TM) version 1.9.3 compiled on December 23 2013
+JVM:          1.8.0_20 (Oracle Corporation 25.20-b23)
+OS:           Linux 3.13.0-24-generic amd64
+
+```
+
+
+```
 $ sudo docker build -t y12docker/jdev .
 $ sudo docker run y12docker/jdev mvn -version
 Apache Maven 3.2.3 (33f8c3e1027c3ddde99d3cdebad2656a31e8fdf4; 2014-08-11T20:58:10+00:00)
