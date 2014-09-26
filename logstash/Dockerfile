@@ -1,6 +1,4 @@
-FROM y12docker/java7
-MAINTAINER Y12STUDIO <y12studio@gmail.com>
-
+FROM y12docker/java8
 #
 # collectd install
 #
