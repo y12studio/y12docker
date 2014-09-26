@@ -1,3 +1,4 @@
 FROM progrium/busybox
 RUN opkg-install curl bash git wget unzip
-CMD ["/bin/bash"]
+ADD app /opt/app
+CMD cat /opt/app/y12.sh
