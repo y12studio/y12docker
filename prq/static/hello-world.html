@@ -1,0 +1,16 @@
+﻿<!-- Import Polymer -->
+<link rel="import" href="bower_components/polymer/polymer.html">
+<!-- Define your custom element -->
+<polymer-element name="hello-world" attributes="who">
+    <template>
+        <span>Hello <strong>{{who}}</strong> :) </span><BR/><span>{{time}}</span>
+    </template>
+    <script>
+        Polymer({
+            who: 'Y12',
+            ready: function() {
+            	this.time = new Date().toLocaleString();
+            }
+        });
+    </script>
+</polymer-element>

@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <title>TEST - Y12STUDIO</title>
+    <meta name="description" content="TEST" />
+    <!--  
+     http://www.polymer-project.org/components/platform/platform.js
+     or 
+     bower_components/platform/platform.js
+     -->
+    <script src="bower_components/platform/platform.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/paper-elements/paper-elements.html">
+    <link rel="import" href="bower_components/core-elements/core-elements.html">
+    <link rel="import" href="hello-world.html">
+    <style>
+ body {
+    font-family: sans-serif;
+  }
+    paper-button {
+      margin: 1em;
+      width: 10em;
+    }
+    paper-button[raisedButton].colored {
+      background: #4285f4;
+      color: #fff;
+    }
+    paper-button[raisedButton].colored #ripple,
+    paper-button[raisedButton].colored::shadow #ripple {
+      color: #2a56c6;
+    }
+    paper-button[raisedButton].colored #focusBg,
+    paper-button[raisedButton].colored::shadow #focusBg {
+      background: #3367d6;
+    }
+    footer {
+      font-size:0.5em;
+    }
+    footer paper-button {
+      margin-right: 30px;
+      width: 6em;
+      opacity: 0.6;
+      color: black;
+    }
+   </style>
+  </head>
+  <body>
+  
+  <core-scaffold>
+  <core-header-panel navigation flex mode="seamed">
+    <core-toolbar>PRQ TEST</core-toolbar>
+    <core-menu theme="core-light-theme">
+      <core-item icon="settings" label="PRQ"></core-item>
+      <core-item icon="settings" label="URL"></core-item>
+    </core-menu>
+  </core-header-panel>
+  <div tool>TEST</div>
+  <div>  
+    <h3><hello-world who="Y12Studio"></hello-world></h3>
+    <div>
+    <paper-dialog>
+      <div horizontal layout end-justified>
+        <core-icon-button icon="close" onclick="dialog.toggle()"></core-icon-button>
+      </div>
+  <div style="font-size: x-large;">Login</div><br>
+  <paper-input label="Username"></paper-input><br>
+  <paper-input label="Password" type="password"></paper-input><br>
+  <paper-button raisedButton onclick="dialog.toggle()">SUBMIT</paper-button>
+</paper-dialog>
+<paper-button label="LOGIN" raisedButton class="colored" onclick="dialog.toggle()">
+</paper-button>
+  </div>
+  <footer>
+  <div>
+    <p id="copyright">&copy; 2014 Y12STUDIO Authors. Code licensed under the 
+    <a href="http://github.com/y12studio/g0v-raw/" target="_blank">Apache License</a>. Documentation licensed under <a href="http://creativecommons.org/licenses/by/3.0/" target="_blank">CC BY 3.0</a>.</p>
+  </div>
+</footer>
+</div>
+</core-scaffold>
+  
+<script>
+var dialog = document.querySelector('paper-dialog');
+addEventListener('polymer-ready', function() {
+});
+</script>
+  </body>
+</html>
