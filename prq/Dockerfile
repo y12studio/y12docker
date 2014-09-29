@@ -40,6 +40,8 @@ ADD . /app
 WORKDIR /app
 RUN chown redis:redis /app
 
+EXPOSE 8080
+
 CMD ["/sbin/my_init"]
 
 #RUN	apt-get purge -y $BUILD_DEP && apt-get autoremove -y

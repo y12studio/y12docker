@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from flask import Flask
+from flask import Flask, request
 from flask.ext import restful
 from rq_dashboard import RQDashboard
 from redis import Redis
@@ -40,7 +40,16 @@ class QueueJob(restful.Resource):
         # [rq/job.py at master · nvie/rq](https://github.com/nvie/rq/blob/master/rq/job.py)
         # new version RQ job.to_dict()
         return r
-        
+    
+    def put(self, func_id):
+        # todos[todo_id] = request.form['data']
+        json_data = request.get_json(force=True)
+        if func_id == 'count_words_at_url':
+            return self.qwordcount(func_id,json_data['url'])
+        elif func_id == 2:
+            pass
+        else:
+            return {'error':'func_id %s not found.' % func_id}
     
     def get(self, func_id):
         if func_id == 'count_words_at_url':
