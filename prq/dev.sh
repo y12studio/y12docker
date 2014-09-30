@@ -1,6 +1,7 @@
 #!/bin/bash
 # ------------------------------------------------------------------
 # build script
+# install [jpetazzo/nsenter](https://github.com/jpetazzo/nsenter)
 # ------------------------------------------------------------------
 
 set -e
@@ -9,7 +10,9 @@ SUBJECT=y12docker-prq-dev
 VERSION=0.1.0
 USAGE="Usage: dev.sh -vh args"
 DOCKER='sudo docker'
-IMG=y12docker/prq
+DENTER='sudo docker-enter'
+IMG=y12docker/prq:devtest
+SEC_WAIT_BOOT=3
 
 # --- Option processing --------------------------------------------
 if [ $# == 0 ] ; then
@@ -23,26 +26,50 @@ function cleandocker {
 }
 
 function build {
+  echo build a test image.
   $DOCKER build -t $IMG .
 }
 
+function nosetests {
+  CID=$1
+  echo "[SystemTest] Container " $CID
+  echo "[SystemTest] boot and wait ...."
+  secs=$SEC_WAIT_BOOT
+  while [ $secs -gt 0 ]; do
+     echo -ne "$secs\033[0K\r"
+     sleep 1
+     : $((secs--))
+  done
+  $DENTER $CID bash /app/dev.sh -c  
+}
+
+function nosetests_in_container {
+  cd /app && /usr/local/bin/nosetests  
+}
+
 function run {
-  $DOCKER run -p 8980:8080 -d $IMG
-  $DOCKER ps
+  local CID=$($DOCKER run -p 8980:8080 -d $IMG)
+  echo "$CID"
 }
 
 function stop {
   $DOCKER ps
-  FOO=$($DOCKER ps | grep $IMG )
-  # echo FOO=$FOO
+  # set -e exit here
+  set +e
+  FOO=$($DOCKER ps | grep $IMG)
   if [ ! -z "$FOO" ]; then
+    echo stop a test image.
+    echo FOO=$FOO
     echo "$FOO" | awk '{print $1}' | xargs $DOCKER stop
     echo [AFTER] stop the container
     $DOCKER ps
+  else
+    echo any image named $IMG not fund.
   fi
+  set -e
 }
 
-while getopts ":vhxbrst" optname; do
+while getopts ":vhxbrstc" optname; do
   case "$optname" in
     "v")
       echo "Version $VERSION"
@@ -64,11 +91,17 @@ while getopts ":vhxbrst" optname; do
     "t")
       stop
       build
-      run
+      CID=$(run)
+      $DOCKER ps
+      nosetests $CID
       exit 0;
       ;;
     "s")
       stop
+      exit 0;
+      ;;
+    "c")
+      nosetests_in_container
       exit 0;
       ;;
     "h")
