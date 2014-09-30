@@ -3,7 +3,7 @@
 # start app
 # 
 cd /app
-exec /sbin/setuser redis python main.py &
+exec /sbin/setuser redis python manage.py runserver 0.0.0.0:8080 &
 sleep 3s
 #
 # start rqworker

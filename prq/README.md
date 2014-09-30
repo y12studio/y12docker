@@ -5,6 +5,56 @@
 
 ## Build log
 
+
+Tue Sep 30 17:46:56 CST 2014
+
+```
+$ cd prq
+$ pip install django
+$ pip install djangorestframework
+$ django-admin.py startproject drf .
+$ ls -al
+total 52
+drwxrwxr-x  6 lin lin 4096 Sep 30 16:10 .
+drwxrwxr-x 12 lin lin 4096 Sep 29 08:37 ..
+-rw-rw-r--  1 lin lin 2632 Sep 30 10:44 dev.sh
+-rw-rw-r--  1 lin lin 1332 Sep 29 19:17 Dockerfile
+drwxrwxr-x  3 lin lin 4096 Sep 30 15:58 draft
+drwxrwxr-x  2 lin lin 4096 Sep 30 16:10 drf
+-rwxr-xr-x  1 lin lin  246 Sep 30 16:10 manage.py
+-rw-rw-r--  1 lin lin 7135 Sep 30 16:10 README.md
+-rw-rw-r--  1 lin lin   99 Sep 30 16:03 requirements.txt
+drwxrwxr-x  2 lin lin 4096 Sep 29 10:38 script
+drwxrwxr-x  2 lin lin 4096 Sep 30 12:10 test
+-rw-rw-r--  1 lin lin  112 Sep 29 09:29 wordcount.py
+
+$ ./manage.py syncdb
+Operations to perform:
+  Apply all migrations: admin, contenttypes, auth, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying sessions.0001_initial... OK
+
+You have installed Django's auth system, and don't have any superusers defined.
+Would you like to create one now? (yes/no): yes
+Username : y12docker
+Paasword : y12docker
+
+$ nano drf/urls.py
+$ nano drf/settings.py
+
+$ ./manage.py runserver 0.0.0.0:8080
+Performing system checks...
+
+System check identified no issues (0 silenced).
+September 30, 2014 - 08:23:55
+Django version 1.7, using settings 'drf.settings'
+Starting development server at http://0.0.0.0:8080/
+
+```
+
 Tue Sep 30 12:08:53 CST 2014
 
 ```

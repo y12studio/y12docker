@@ -38,7 +38,7 @@ ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 ADD . /app
 WORKDIR /app
-RUN chown redis:redis /app
+RUN chown -R redis:redis /app
 
 EXPOSE 8080
 
