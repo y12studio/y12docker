@@ -44,7 +44,7 @@ function nosetests {
 }
 
 function nosetests_in_container {
-  cd /app && /usr/local/bin/nosetests  
+  cd /app && /usr/local/bin/nosetests -v
 }
 
 function run {
