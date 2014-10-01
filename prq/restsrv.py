@@ -32,15 +32,14 @@ def testapi_wcount():
 class QueueJob(restful.Resource):
     
     def qwordcount(self, fid , url):
-        r = {}
         job = queue.enqueue(count_words_at_url, url)
-        r['raw'] = job.dump()
+        r = {'id':job.id ,
+             'fid':fid,
+             'url':url, 
+             'rjob': '/rjob/%s' % job.id,
+             'raw':job.dump()}
         # dump without id ?
-        r['id'] = job.id
-        r['fid'] = fid
-        r['url'] = url
-        r['rjob'] = '/rjob/%s' % job.id
-        flaskapp.logger.info(json.dumps(r,ensure_ascii=False,encoding='utf8'))
+        flaskapp.logger.info(json.dumps(r, ensure_ascii=False, encoding='utf8'))
         # [rq/job.py at master · nvie/rq](https://github.com/nvie/rq/blob/master/rq/job.py)
         # new version RQ job.to_dict()
         return r
@@ -49,7 +48,7 @@ class QueueJob(restful.Resource):
         # todos[todo_id] = request.form['data']
         json_data = request.get_json(force=True)
         if func_id == 'count_words_at_url':
-            return self.qwordcount(func_id,json_data['url'])
+            return self.qwordcount(func_id, json_data['url'])
         elif func_id == 2:
             pass
         else:
@@ -57,7 +56,7 @@ class QueueJob(restful.Resource):
     
     def get(self, func_id):
         if func_id == 'count_words_at_url':
-            return self.qwordcount(func_id,'http://nvie.com')
+            return self.qwordcount(func_id, 'http://nvie.com')
         elif func_id == 2:
             pass
         else:
@@ -71,7 +70,7 @@ class ResultJob(restful.Resource):
         r['raw'] = job.dump()
         if(job.is_finished):
             r['result'] = job.result
-        flaskapp.logger.info(json.dumps(r,ensure_ascii=False,encoding='utf8'))
+        flaskapp.logger.info(json.dumps(r, ensure_ascii=False, encoding='utf8'))
         return r
 
 api.add_resource(QueueJob, '/qjob/<string:func_id>')
