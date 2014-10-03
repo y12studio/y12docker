@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.13
+FROM phusion/baseimage:0.9.14
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
 RUN locale-gen --no-purge zh_TW.UTF-8
@@ -10,6 +10,9 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # Use the phusion baseimage's insecure key
 RUN /usr/sbin/enable_insecure_key
+
+# Disable ssh
+# RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 RUN apt-get -yq update
 RUN apt-get -yq upgrade
