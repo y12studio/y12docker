@@ -26,4 +26,9 @@ ADD collectd.sh $CTD_SRV
 RUN chmod +x $CTD_SRV
 
 CMD ["/sbin/my_init"]
+
+EXPOSE 25826 
+
+# Disable ssh
+# RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
