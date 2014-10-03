@@ -8,7 +8,7 @@ RUN apt-get -yq update && apt-get install -yq nginx
 #
 # Install ElasticSearch.
 #
-RUN wget -qO- https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.2.tar.gz | tar xvz -C /tmp &&\
+RUN wget -qO- https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.4.tar.gz | tar xvz -C /tmp &&\
     mv /tmp/elasticsearch-* /opt/elasticsearch && chown elk:elk /opt/elasticsearch
 
 ENV ES_SRV /etc/service/elasticsearch/run
@@ -44,5 +44,9 @@ ADD logstash.conf $LS_CONF
 RUN /opt/elasticsearch/bin/plugin -install mobz/elasticsearch-head
 RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
 
+EXPOSE 25826 8080 9200
+
 CMD ["/sbin/my_init"]
+# Disable ssh
+# RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

@@ -5,7 +5,17 @@
 * [plugin] elastic Head http://docker_host:9200/_plugin/head/
 
 
-## build log v140926
+## build log 
+
+elasticsearch-1.3.4 / Fri Oct  3 21:59:44 CST 2014
+
+```
+$ sudo docker build -t y12docker/elasticsearch .
+$ sudo docker run -p 8080:8080 -p 9200:9200 y12docker/elasticsearch
+
+```
+
+v140926
 
 ```
 $ date
