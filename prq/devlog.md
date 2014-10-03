@@ -1,6 +1,5 @@
 ## Build log
 
-
 Tue Sep 30 19:20:20 CST 2014
 
 * Move the django-rest-framework impl to the draft directory

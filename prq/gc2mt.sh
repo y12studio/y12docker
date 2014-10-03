@@ -8,7 +8,7 @@ set -e
 
 SUBJECT=y12docker-prq-dev
 VERSION=0.1.0
-USAGE="Usage: dev.sh -vh args"
+USAGE="Usage: gc2mt.sh -vh args"
 DOCKER='sudo docker'
 DENTER='sudo docker-enter'
 IMG=y12docker/prq:devtest
@@ -40,7 +40,7 @@ function nosetests {
      sleep 1
      : $((secs--))
   done
-  $DENTER $CID bash /app/dev.sh -c  
+  $DENTER $CID bash /app/gc2mt.sh -c  
 }
 
 function nosetests_in_container {
