@@ -1,5 +1,14 @@
 Build log
 
+Sat Oct  4 16:04:11 CST 2014
+
+```
+$ sudo docker build -t y12docker/pbase .
+
+```
+
+
+
 Fri Oct  3 12:34:43 CST 2014
 
 ```

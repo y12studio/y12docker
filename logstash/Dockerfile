@@ -2,7 +2,7 @@ FROM y12docker/java8
 #
 # collectd install
 #
-RUN apt-get -yq update && apt-get install -y collectd
+RUN apt-get install -y collectd
 #
 # logstash install
 #
@@ -31,4 +31,5 @@ EXPOSE 25826
 
 # Disable ssh
 # RUN rm -rf /etc/service/sshd /etc/my_init.d/00_regen_ssh_host_keys.sh
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm -rf /tmp/* /var/tmp/*

@@ -1,4 +1,4 @@
-FROM phusion/baseimage:0.9.14
+FROM phusion/baseimage:0.9.15
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
 RUN locale-gen --no-purge zh_TW.UTF-8
@@ -24,4 +24,5 @@ RUN apt-get install -yq curl wget git python unzip
 RUN curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python2.7
 
 CMD ["/sbin/my_init"]
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+RUN rm -rf /tmp/* /var/tmp/*

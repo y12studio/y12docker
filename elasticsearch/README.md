@@ -7,6 +7,12 @@
 
 ## build log 
 
+Sat Oct  4 17:27:05 CST 2014
+
+```
+$ sudo docker build -t y12docker/elasticsearch .
+```
+
 elasticsearch-1.3.4 / Fri Oct  3 21:59:44 CST 2014
 
 ```

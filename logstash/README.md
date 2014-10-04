@@ -1,5 +1,12 @@
 Build log
 
+Sat Oct  4 16:55:40 CST 2014
+
+```
+$ sudo docker build -t y12docker/logstash .
+
+```
+
 Fri Oct  3 21:41:42 CST 2014
 
 ```
