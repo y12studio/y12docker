@@ -1,7 +1,13 @@
 FROM y12docker/elasticsearch
 
-RUN /opt/elasticsearch/bin/plugin -u http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip -i ansj
+RUN wget -qO- http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip  -O /tmp/es-ansj.zip
 RUN apt-get install -y opencc
+
+RUN unzip -d /tmp /tmp/es-ansj.zip &&\
+    cd /tmp/elasticsearch-analysis-ansj-* &&\
+    mkdir -p /opt/elasticsearch/plugins/ansj &&\
+    mv lib/*.jar /opt/elasticsearch/plugins/ansj &&\
+    mv dic /opt/elasticsearch/config/
 
 ADD . /opt/estw
 RUN cd /opt/elasticsearch/config &&  cat /opt/estw/ansj_plug.conf >> elasticsearch.yml

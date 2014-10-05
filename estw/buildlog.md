@@ -1,5 +1,65 @@
 ## Build log
 
+Sun Oct  5 21:38:08 CST 2014
+
+```
+$ sudo docker build -t  y12docker/estw .
+$ sudo docker run -i -t  y12docker/estw /bin/bash
+# /opt/elasticsearch/bin/elasticsearch -d
+# curl -s 'http://localhost:9200/_nodes?plugin=true&pretty' | grep -B 2 -A 2 ansj
+          "analysis" : {
+            "analyzer" : {
+              "index_ansj" : {
+                "type" : "ansj_index"
+              },
+              "query_ansj" : {
+                "type" : "ansj_query"
+              },
+              "default" : {
+                "type" : "ansj_index"
+              }
+            }
+--
+      },
+      "plugins" : [ {
+        "name" : "analysis-ansj",
+        "version" : "NA",
+        "description" : "ansj analysis",
+        "jvm" : true,
+        "site" : false
+
+# curl -XPUT http://localhost:9200/fooindex
+# curl -XPOST http://localhost:9200/fooindex/fulltext/_mapping -d'
+{
+    "fulltext": {
+             "_all": {
+            "indexAnalyzer": "index_ansj",
+            "searchAnalyzer": "query_ansj",
+            "term_vector": "no",
+            "store": "false"
+        },
+        "properties": {
+            "content": {
+                "type": "string",
+                "store": "no",
+                "term_vector": "with_positions_offsets",
+                "indexAnalyzer": "index_ansj",
+                "searchAnalyzer": "query_ansj",
+                "include_in_all": "true",
+                "boost": 8
+            }
+        }
+    }
+}'
+
+# curl -XPOST http://localhost:9200/fooindex/fulltext/1 -d'{content:"哈哈"}'
+
+# curl -XGET 'http://localhost:9200/fooindex/_analyze?pretty=true&analyzer=ansj_index' -d '三峡河龙埔里河堤外工程施工导致河流改道，造成对岸(介寿里)土地流失'
+
+# curl -XGET 'http://localhost:9200/fooindex/_analyze?pretty=true&analyzer=ansj_index' -d '三峽河龍埔里河堤外工程施工導致河流改道，造成對岸(介壽里)土地流失'
+```
+
+
 Sun Oct  5 16:49:02 CST 2014
 
 ```
