@@ -1,4 +1,4 @@
-FROM y12docker/logstash
+FROM y12docker/java8
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
 # add our user and group first
@@ -9,7 +9,7 @@ RUN apt-get install -yq nginx
 # Install ElasticSearch.
 #
 RUN wget -qO- https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.4.tar.gz | tar xvz -C /tmp &&\
-    mv /tmp/elasticsearch-* /opt/elasticsearch && chown elk:elk /opt/elasticsearch
+    mv /tmp/elasticsearch-* /opt/elasticsearch
 
 ENV ES_SRV /etc/service/elasticsearch/run
 ADD elasticsearch.sh $ES_SRV
@@ -27,11 +27,6 @@ ENV NGINX_SRV /etc/service/nginx/run
 ADD nginx.sh $NGINX_SRV
 RUN chmod +x $NGINX_SRV
 ADD nginx.conf /etc/nginx/nginx.conf
-# 
-# Update logstash conf
-#
-ADD nginx.pattern /opt/logstash/patterns/nginx
-ADD logstash.conf $LS_CONF
 #
 # update kibana default route schema json file
 #
@@ -44,7 +39,9 @@ ADD logstash.conf $LS_CONF
 RUN /opt/elasticsearch/bin/plugin -install mobz/elasticsearch-head
 RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
 
-EXPOSE 25826 8080 9200
+RUN chown elk:elk -R /opt/elasticsearch
+
+EXPOSE 8080 9200
 
 CMD ["/sbin/my_init"]
 # Disable ssh

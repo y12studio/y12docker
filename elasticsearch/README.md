@@ -7,6 +7,19 @@
 
 ## build log 
 
+Sat Oct  4 21:00:21 CST 2014
+
+base on java8 
+
+```
+$ sudo docker images | grep elastic
+y12docker/elasticsearch     latest              3947a21578be        3 hours ago         1.185 GB
+$ sudo docker build -t y12docker/elasticsearch .
+$ sudo docker images | grep elastic
+y12docker/elasticsearch     latest              82ca4a1e44c0        5 seconds ago       954.3 MB
+```
+
+
 Sat Oct  4 17:27:05 CST 2014
 
 ```
