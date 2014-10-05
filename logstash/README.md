@@ -1,4 +1,11 @@
-Build log
+## Deprecated 
+
+Sat Oct  4 16:55:40 CST 2014
+
+replace by y12docker/java8/script
+
+
+## Build log
 
 Sat Oct  4 16:55:40 CST 2014
 
