@@ -8,6 +8,9 @@ $ sudo docker run y12docker/java8 java -version
 java version "1.8.0_20"
 Java(TM) SE Runtime Environment (build 1.8.0_20-b26)
 Java HotSpot(TM) 64-Bit Server VM (build 25.20-b23, mixed mode)
+$ sudo docker images | grep java8
+y12docker/java8             latest              9b2495cf736e        9 minutes ago       884.8 MB
+
 ```
 
 Fri Oct  3 21:15:06 CST 2014
