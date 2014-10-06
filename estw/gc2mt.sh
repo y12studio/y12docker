@@ -14,8 +14,8 @@ USAGE="Usage: gc2mt.sh -vhxbrstc args"
 DOCKER='sudo docker'
 DENTER='sudo docker-enter'
 IMG=y12docker/estw:test
-GC2MT_HOME=/opt/estw/utils
-SEC_WAIT_BOOT=20
+GC2MT_HOME=/opt/estw
+SEC_WAIT_BOOT=5
 
 # --- Option processing --------------------------------------------
 if [ $# == 0 ] ; then
@@ -47,8 +47,8 @@ function enter_container_run {
 }
 
 function c_in_container {
-  cd $GC2MT_HOME
-  nosetests -v
+  cd $GC2MT_HOME/utils
+  nosetests -v --nocapture
 }
 
 function commitimg {

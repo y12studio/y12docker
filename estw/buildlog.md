@@ -1,5 +1,46 @@
 ## Build log
 
+Mon Oct  6 13:58:43 CST 2014
+
+```
+$ bash gc2mt.sh -t
+
+Successfully built 3c12ae229ffc
+CONTAINER ID        IMAGE                 COMMAND             CREATED                  STATUS                  PORTS                                            NAMES
+727d4a668d96        y12docker/estw:test   "/sbin/my_init"     Less than a second ago   Up Less than a second   0.0.0.0:8080->8080/tcp, 0.0.0.0:9200->9200/tcp   mad_babbage
+[SystemTest] Container  727d4a668d966d2601d235c8b1abafca4d84d4d31100d376190a5ed0dbd8f9e0
+[SystemTest] boot and wait ....
+No handlers could be found for logger "elasticsearch.trace"
+test_es_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_fooindex_import (test_es_ansj.TestElasticSearch) ... ok
+test_kibana_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_sc (test_es_ansj.TestElasticSearch) ...
+Result : 三峡,河龙埔,里,河堤,外,工程,施工,导致,河流,改,道,，,造成,对岸,(,介寿,里,),土地,流失
+ok
+test_tc (test_es_ansj.TestElasticSearch) ...
+Result : 三,峽,河,龍,埔,里,河堤,外,工程,施工,導,致,河流,改,道,，,造成,對,岸,(,介壽,里,),土地,流失
+FAIL
+
+======================================================================
+FAIL: test_tc (test_es_ansj.TestElasticSearch)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/opt/estw/utils/test/test_es_ansj.py", line 76, in test_tc
+    self.assertTrue(x in mlist_tc)
+AssertionError: False is not true
+-------------------- >> begin captured logging << --------------------
+requests.packages.urllib3.connectionpool: INFO: Starting new HTTP connection (1): localhost
+requests.packages.urllib3.connectionpool: DEBUG: "POST /fooindex/_analyze?analyzer=ansj_index HTTP/1.1" 200 1956
+--------------------- >> end captured logging << ---------------------
+
+----------------------------------------------------------------------
+Ran 5 tests in 7.329s
+
+FAILED (failures=1)
+
+```
+
+
 Sun Oct  5 21:38:08 CST 2014
 
 ```

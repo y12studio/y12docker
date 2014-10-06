@@ -9,6 +9,13 @@ RUN unzip -d /tmp /tmp/es-ansj.zip &&\
     mv lib/*.jar /opt/elasticsearch/plugins/ansj &&\
     mv dic /opt/elasticsearch/config/
 
+
+ADD utils/requirements.txt /opt/estw/utils/
+#
+# Test only
+#
+RUN cd /opt/estw/utils && pip install -r requirements.txt
+
 ADD . /opt/estw
 RUN cd /opt/elasticsearch/config &&  cat /opt/estw/ansj_plug.conf >> elasticsearch.yml
 RUN chown elk:elk -R /opt/elasticsearch
