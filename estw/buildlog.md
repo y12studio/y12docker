@@ -1,5 +1,34 @@
 ## Build log
 
+Mon Oct  6 17:22:25 CST 2014
+
+```
+$ bash gc2mt.sh -t
+
+Successfully built 7308618bf8bb
+CONTAINER ID        IMAGE                 COMMAND             CREATED                  STATUS                  PORTS                                            NAMES
+08d61022311f        y12docker/estw:test   "/sbin/my_init"     Less than a second ago   Up Less than a second   0.0.0.0:8080->8080/tcp, 0.0.0.0:9200->9200/tcp   sharp_turing
+[SystemTest] Container  08d61022311f0be8ed6dceb9890198d39215cb28c45a676959405c5e2db00645
+[SystemTest] boot and wait ....
+No handlers could be found for logger "elasticsearch.trace"
+test_es_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_fooindex_import (test_es_ansj.TestElasticSearch) ... ok
+test_kibana_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_sc (test_es_ansj.TestElasticSearch) ...
+Result : 三峡,河龙埔,里,河堤,外,工程施工,导致,河流,改道,，,造成,对岸,(,介寿,里,),土地,流失,工程,施工
+ok
+test_tc (test_es_ansj.TestElasticSearch) ...
+Result : 三峽,河龍埔里,河堤,外,工程施工,導致,河流,改道,，,造成,對岸,(,介壽里,),土地,流失,工程,施工
+ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 8.709s
+
+OK
+
+```
+
+
 Mon Oct  6 13:58:43 CST 2014
 
 ```
