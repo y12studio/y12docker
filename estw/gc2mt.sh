@@ -29,7 +29,7 @@ function cleandocker {
 }
 
 function build {
-  echo build a test image.
+  echo build a test image : $IMG
   $DOCKER build -t $IMG .
 }
 

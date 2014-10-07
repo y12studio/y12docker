@@ -1,4 +1,4 @@
-FROM y12docker/elasticsearch
+FROM y12docker/elasticsearch:0.0.1
 
 RUN wget -qO- http://maven.ansj.org/org/ansj/elasticsearch-analysis-ansj/1.x.1/elasticsearch-analysis-ansj-1.x.1-release.zip  -O /tmp/es-ansj.zip
 RUN apt-get install -y opencc

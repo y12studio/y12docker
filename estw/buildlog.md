@@ -1,5 +1,175 @@
 ## Build log
 
+Tue Oct  7 18:02:14 CST 2014
+
+rebuild estw:0.0.1 without testdata
+
+```
+$ sudo docker build -t y12docker/estw:0.0.1 .
+$ sudo docker images | grep estw
+y12docker/estw              test                a3edd4175e59        About a minute ago   1.127 GB
+y12docker/estw              0.0.1               e54621f6d08d        6 minutes ago        1.127 GB
+y12docker/estw              latest              1603e6e8a98e        23 hours ago         1.079 GB
+$ sudo docker push y12docker/estw:0.0.1
+```
+
+
+Mon Oct  6 18:28:35 CST 2014
+
+```
+$ bash gc2mt.sh -t
+
+Successfully built 8f0b8654c6ef
+CONTAINER ID        IMAGE                 COMMAND             CREATED             STATUS                  PORTS                                            NAMES
+6ccf9b8a69fe        y12docker/estw:test   "/sbin/my_init"     1 seconds ago       Up Less than a second   0.0.0.0:8080->8080/tcp, 0.0.0.0:9200->9200/tcp   ecstatic_feynman
+[SystemTest] Container  6ccf9b8a69fe9896ae6b2cf05e9c5254fb0446a88dcab8c0317f4eca6b6f2eb9
+[SystemTest] boot and wait ....
+No handlers could be found for logger "elasticsearch.trace"
+test_ansj_sc (test_es_ansj.TestElasticSearch) ...
+Result : 三峡,河龙埔,里,河堤,外,工程施工,导致,河流,改道,，,造成,对岸,(,介寿,里,),土地,流失,工程,施工
+ok
+test_ansj_tc (test_es_ansj.TestElasticSearch) ...
+Result : 三峽,河龍埔里,河堤,外,工程施工,導致,河流,改道,，,造成,對岸,(,介壽里,),土地,流失,工程,施工
+ok
+test_es_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_fooindex_import (test_es_ansj.TestElasticSearch) ... ok
+test_kibana_http_conn (test_es_ansj.TestElasticSearch) ... ok
+test_search_fooindex_tc (test_es_ansj.TestElasticSearch) ... {
+    "hits": {
+        "hits": [
+            {
+                "_score": 0.53699243,
+                "_type": "fulltext",
+                "_id": "s7kl25IrT1yzyp7uuM3k4A",
+                "_source": {
+                    "content": "三峽河龍埔里河堤外工程施工導致河流改道，造成對岸(介壽里)土地流失"
+                },
+                "_index": "fooindex"
+            }
+        ],
+        "total": 1,
+        "max_score": 0.53699243
+    },
+    "_shards": {
+        "successful": 5,
+        "failed": 0,
+        "total": 5
+    },
+    "took": 5,
+    "timed_out": false
+}
+ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 9.177s
+
+OK
+
+$ bash gc2mt.sh -u y12docker/estw:0.0.1
+[Docker Container Commit] image name  y12docker/estw:0.0.1
+[Docker Container Commit]  6ccf9b8a69fe
+Warning: '--run' is deprecated, it will be removed soon. See usage.
+955dac897dc2c350ecae932c467ada45d087d443a3c763f36d2bbb35d370ec70
+[{
+    "Architecture": "amd64",
+    "Author": "",
+    "Comment": "",
+    "Config": {
+        "AttachStderr": false,
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "Cmd": [
+            "/sbin/my_init"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "HOME=/root",
+            "LANG=zh_TW.UTF-8",
+            "LANGUAGE=zh_TW.UTF-8",
+            "LC_ALL=zh_TW.UTF-8",
+            "DEBIAN_FRONTEND=noninteractive",
+            "JAVA_HOME=/usr/lib/jvm/java-8-oracle/",
+            "ES_SRV=/etc/service/elasticsearch/run",
+            "NGINX_SRV=/etc/service/nginx/run"
+        ],
+        "ExposedPorts": {
+            "8080/tcp": {},
+            "9200/tcp": {}
+        },
+        "Hostname": "",
+        "Image": "",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": null,
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": ""
+    },
+    "Container": "6ccf9b8a69fe9896ae6b2cf05e9c5254fb0446a88dcab8c0317f4eca6b6f2eb9",
+    "ContainerConfig": {
+        "AttachStderr": false,
+        "AttachStdin": false,
+        "AttachStdout": false,
+        "Cmd": [
+            "/sbin/my_init"
+        ],
+        "CpuShares": 0,
+        "Cpuset": "",
+        "Domainname": "",
+        "Entrypoint": null,
+        "Env": [
+            "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            "HOME=/root",
+            "LANG=zh_TW.UTF-8",
+            "LANGUAGE=zh_TW.UTF-8",
+            "LC_ALL=zh_TW.UTF-8",
+            "DEBIAN_FRONTEND=noninteractive",
+            "JAVA_HOME=/usr/lib/jvm/java-8-oracle/",
+            "ES_SRV=/etc/service/elasticsearch/run",
+            "NGINX_SRV=/etc/service/nginx/run"
+        ],
+        "ExposedPorts": {
+            "8080/tcp": {},
+            "9200/tcp": {}
+        },
+        "Hostname": "6ccf9b8a69fe",
+        "Image": "y12docker/estw:test",
+        "Memory": 0,
+        "MemorySwap": 0,
+        "NetworkDisabled": false,
+        "OnBuild": null,
+        "OpenStdin": false,
+        "PortSpecs": null,
+        "StdinOnce": false,
+        "Tty": false,
+        "User": "",
+        "Volumes": null,
+        "WorkingDir": ""
+    },
+    "Created": "2014-10-06T10:30:40.884174343Z",
+    "DockerVersion": "1.2.0",
+    "Id": "955dac897dc2c350ecae932c467ada45d087d443a3c763f36d2bbb35d370ec70",
+    "Os": "linux",
+    "Parent": "8f0b8654c6ef4dea30dace902b70cef2c7c42e2b1c35c926fc4f2e800d630444",
+    "Size": 3098542
+}
+
+$ sudo docker images | grep estw
+y12docker/estw              0.0.1               955dac897dc2        54 seconds ago      1.079 GB
+y12docker/estw              test                8f0b8654c6ef        2 minutes ago       1.076 GB
+y12docker/estw              latest              0c26c9a53813        20 hours ago        1.059 GB
+
+```
+
 Mon Oct  6 17:22:25 CST 2014
 
 ```
