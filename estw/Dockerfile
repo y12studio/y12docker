@@ -6,10 +6,10 @@ RUN apt-get install -y opencc
 RUN unzip -d /tmp /tmp/es-ansj.zip &&\
     cd /tmp && mv elasticsearch-analysis-ansj-* /opt/elasticsearch/plugins/ansj
     
-ADD utils/requirements.txt /opt/estw/utils/
 #
 # Test only
 #
+ADD utils/requirements.txt /opt/estw/utils/
 RUN cd /opt/estw/utils && pip install -r requirements.txt
 
 ADD . /opt/estw

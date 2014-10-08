@@ -8,6 +8,238 @@
 ## build log 
 
 
+Wed Oct  8 09:50:43 CST 2014
+
+* proxy _search/_nodes port:9200 to port:8080
+* kibana 3.1.1
+* reuse tag 0.0.1 
+
+```
+$ sudo docker build -t y12docker/elasticsearch .
+$ sudo docker build -t y12docker/elasticsearch:0.0.1 .
+$ sudo docker push y12docker/elasticsearch:0.0.1
+
+$ sudo docker run y12docker/elasticsearch grep -A 2 -B 5 'hostname' /opt/kibana/config.js
+     * Note: this can also be an object if you want to pass options to the http client. For example:
+     *
+     *  +elasticsearch: {server: "http://localhost:9200", withCredentials: true}+
+     *
+     */
+    elasticsearch: "http://"+window.location.hostname+":8080",
+
+    /** @scratch /configuration/config.js/5
+
+$ bash gc2mt.sh -t
+$ curl -XGET 'http://localhost:8080/_nodes?pretty'
+
+{
+  "cluster_name" : "elasticsearch",
+  "nodes" : {
+    "-Pe49LK2Tv23vidsfuIkfg" : {
+      "name" : "Postmortem",
+      "transport_address" : "inet[/172.17.0.28:9300]",
+      "host" : "13543b27c8fb",
+      "ip" : "172.17.0.28",
+      "version" : "1.3.4",
+      "build" : "a70f3cc",
+      "http_address" : "inet[/172.17.0.28:9200]",
+      "settings" : {
+        "name" : "Postmortem",
+        "path" : {
+          "logs" : "/opt/elasticsearch/logs",
+          "home" : "/opt/elasticsearch"
+        },
+        "cluster" : {
+          "name" : "elasticsearch"
+        },
+        "foreground" : "yes"
+      },
+      "os" : {
+        "refresh_interval_in_millis" : 1000,
+        "available_processors" : 1,
+        "cpu" : {
+          "vendor" : "Intel",
+          "model" : "Core(TM) i7-3770 CPU @ 3.40GHz",
+          "mhz" : 3265,
+          "total_cores" : 1,
+          "total_sockets" : 1,
+          "cores_per_socket" : 1,
+          "cache_size_in_bytes" : 6144
+        },
+        "mem" : {
+          "total_in_bytes" : 4145586176
+        },
+        "swap" : {
+          "total_in_bytes" : 4292866048
+        }
+      },
+      "process" : {
+        "refresh_interval_in_millis" : 1000,
+        "id" : 105,
+        "max_file_descriptors" : 1048576,
+        "mlockall" : false
+      },
+      "jvm" : {
+        "pid" : 105,
+        "version" : "1.8.0_20",
+        "vm_name" : "Java HotSpot(TM) 64-Bit Server VM",
+        "vm_version" : "25.20-b23",
+        "vm_vendor" : "Oracle Corporation",
+        "start_time_in_millis" : 1412734222566,
+        "mem" : {
+          "heap_init_in_bytes" : 268435456,
+          "heap_max_in_bytes" : 1065025536,
+          "non_heap_init_in_bytes" : 2555904,
+          "non_heap_max_in_bytes" : 0,
+          "direct_max_in_bytes" : 1065025536
+        },
+        "gc_collectors" : [ "ParNew", "ConcurrentMarkSweep" ],
+        "memory_pools" : [ "Code Cache", "Metaspace", "Compressed Class Space", "Par Eden Space", "Par Survivor Space", "CMS Old Gen" ]
+      },
+      "thread_pool" : {
+        "percolate" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : "1k"
+        },
+        "snapshot_data" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 5,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "bench" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "index" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : "200"
+        },
+        "refresh" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "suggest" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : "1k"
+        },
+        "generic" : {
+          "type" : "cached",
+          "keep_alive" : "30s",
+          "queue_size" : -1
+        },
+        "warmer" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "search" : {
+          "type" : "fixed",
+          "min" : 3,
+          "max" : 3,
+          "queue_size" : "1k"
+        },
+        "flush" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "optimize" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : -1
+        },
+        "management" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 5,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "get" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : "1k"
+        },
+        "merge" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        },
+        "bulk" : {
+          "type" : "fixed",
+          "min" : 1,
+          "max" : 1,
+          "queue_size" : "50"
+        },
+        "snapshot" : {
+          "type" : "scaling",
+          "min" : 1,
+          "max" : 1,
+          "keep_alive" : "5m",
+          "queue_size" : -1
+        }
+      },
+      "network" : {
+        "refresh_interval_in_millis" : 5000,
+        "primary_interface" : {
+          "address" : "172.17.0.28",
+          "name" : "eth0",
+          "mac_address" : "5A:8F:A2:43:B6:31"
+        }
+      },
+      "transport" : {
+        "bound_address" : "inet[/0:0:0:0:0:0:0:0:9300]",
+        "publish_address" : "inet[/172.17.0.28:9300]"
+      },
+      "http" : {
+        "bound_address" : "inet[/0:0:0:0:0:0:0:0:9200]",
+        "publish_address" : "inet[/172.17.0.28:9200]",
+        "max_content_length_in_bytes" : 104857600
+      },
+      "plugins" : [ {
+        "name" : "head",
+        "version" : "NA",
+        "description" : "No description found.",
+        "url" : "/_plugin/head/",
+        "jvm" : false,
+        "site" : true
+      }, {
+        "name" : "HQ",
+        "version" : "NA",
+        "description" : "No description found.",
+        "url" : "/_plugin/HQ/",
+        "jvm" : false,
+        "site" : true
+      } ]
+    }
+  }
+}
+
+
+```
+
 Tue Oct  7 17:48:02 CST 2014
 
 tag y12docker/elasticsearch:0.0.1

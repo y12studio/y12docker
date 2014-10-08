@@ -1,0 +1,17 @@
+{
+    "fulltext": {
+             "_all": {
+            "term_vector": "no",
+            "store": "false"
+        },
+        "properties": {
+            "content": {
+                "type": "string",
+                "store": "no",
+                "term_vector": "with_positions_offsets",
+                "include_in_all": "true",
+                "boost": 8
+            }
+        }
+    }
+}

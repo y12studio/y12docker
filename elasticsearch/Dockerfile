@@ -10,16 +10,28 @@ RUN apt-get install -yq nginx
 #
 RUN wget -qO- https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.3.4.tar.gz | tar xvz -C /tmp &&\
     mv /tmp/elasticsearch-* /opt/elasticsearch
+#
+# Install kibana
+#
+RUN wget -qO- https://download.elasticsearch.org/kibana/kibana/kibana-3.1.1.tar.gz | tar xvz -C /tmp &&\
+    mv /tmp/kibana-* /opt/kibana && chown www-data:www-data /opt/kibana
+#
+# enable elasticsearch plugin
+#
+RUN /opt/elasticsearch/bin/plugin -install mobz/elasticsearch-head
+RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
+
+#
+# Test only
+#
+ADD utils/requirements.txt /opt/esbuild/utils/
+RUN cd /opt/esbuild/utils && pip install -r requirements.txt
+
+ADD . /opt/esbuild
 
 ENV ES_SRV /etc/service/elasticsearch/run
 ADD elasticsearch.sh $ES_SRV
 RUN chmod +x $ES_SRV
-
-#
-# Install kibana
-#
-RUN wget -qO- https://download.elasticsearch.org/kibana/kibana/kibana-3.1.0.tar.gz | tar xvz -C /tmp &&\
-    mv /tmp/kibana-* /opt/kibana && chown www-data:www-data /opt/kibana
 #
 # conf nginx
 #
@@ -32,12 +44,7 @@ ADD nginx.conf /etc/nginx/nginx.conf
 #
 # RUN cd /opt/kibana/app/dashboards && cp default.json default.json.bak
 # ADD kibana.json /opt/kibana/app/dashboards/default.json
-
-#
-# enable elasticsearch plugin
-#
-RUN /opt/elasticsearch/bin/plugin -install mobz/elasticsearch-head
-RUN /opt/elasticsearch/bin/plugin -install royrusso/elasticsearch-HQ
+RUN sed -i 's/":9200"/":8080"/' /opt/kibana/config.js
 
 RUN chown elk:elk -R /opt/elasticsearch
 
