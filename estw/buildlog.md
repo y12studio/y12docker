@@ -1,5 +1,21 @@
 ## Build log
 
+Wed Oct  8 14:49:59 CST 2014
+
+* rebuild from y12docker/elasticsearch:0.0.1
+* kibana : mv guided.json to default.json
+
+
+```
+$ bash gc2mt.sh -t
+$ sudo docker build -t y12docker/estw:0.0.1 .
+$ sudo docker images | grep estw
+y12docker/estw              0.0.1               646f51fd76a7        About a minute ago   1.127 GB
+y12docker/estw              test                89d110667455        5 minutes ago        1.127 GB
+
+$ sudo docker push y12docker/estw:0.0.1
+```
+
 Tue Oct  7 18:02:14 CST 2014
 
 rebuild estw:0.0.1 without testdata

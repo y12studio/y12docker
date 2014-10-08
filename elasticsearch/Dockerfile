@@ -44,6 +44,7 @@ ADD nginx.conf /etc/nginx/nginx.conf
 #
 # RUN cd /opt/kibana/app/dashboards && cp default.json default.json.bak
 # ADD kibana.json /opt/kibana/app/dashboards/default.json
+
 RUN sed -i 's/":9200"/":8080"/' /opt/kibana/config.js
 
 RUN chown elk:elk -R /opt/elasticsearch

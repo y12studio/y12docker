@@ -23,6 +23,12 @@ RUN cd /opt/elasticsearch/plugins/ansj/dic/user/ &&\
 RUN mv -f /opt/estw/dic/ext.dic /opt/elasticsearch/plugins/ansj/dic/user/
 
 RUN cd /opt/elasticsearch/config &&  cat /opt/estw/ansj_plug.conf >> elasticsearch.yml
+#
+# update kibana index json
+#
+RUN cd /opt/kibana/app/dashboards && mv default.json default.json.bak &&\
+    cp guided.json default.json
+
 RUN chown elk:elk -R /opt/elasticsearch
 
 EXPOSE 8080 9200
