@@ -1,4 +1,5 @@
 FROM phusion/baseimage:0.9.15
+# https://github.com/phusion/baseimage-docker
 MAINTAINER Y12STUDIO <y12studio@gmail.com>
 
 RUN locale-gen --no-purge zh_TW.UTF-8

@@ -1,9 +1,20 @@
 Build log
 
+Thu Dec 25 11:39:37 CST 2014
+
+```
+$ docker build --no-cache=true -t y12docker/pbase .
+
+```
+
 Sat Oct  4 16:04:11 CST 2014
 
 ```
-$ sudo docker build -t y12docker/pbase .
+$ sudo docker build -t y12docker/pbase:14.12 .
+lin@ubuntu73:~/git/y12docker/pbase$ docker images | grep pbase
+y12docker/pbase             latest              c1cdef513948        2 minutes ago       403.7 MB
+y12docker/pbase             14.12               c1cdef513948        2 minutes ago       403.7 MB
+$ docker push y12docker/pbase:14.12
 
 ```
 
