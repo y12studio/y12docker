@@ -1,5 +1,17 @@
 ## Docker Image for Minecraft Forge
 
+Fri Dec 26 14:09:32 CST 2014
+
+rebuild 1.8 version
+
+```
+$ docker build -t y12docker/mcforge:1.8 .
+$ CID=$(docker run -d -p=25565:25565 y12docker/mcforge:1.8)
+$ sudo docker-bash $CID
+
+```
+
+
 downgrade ver to 1.7.10-Recommended	10.13.2.1230	1.7.10
 
 Fri Dec 26 13:01:31 CST 2014
