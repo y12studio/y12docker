@@ -1,7 +1,8 @@
 FROM y12docker/java8:14.12
 # https://github.com/y12studio/y12docker/tree/master/mc
 # Install minecraftforge
-ENV MCF_VER 1.8-11.14.0.1278-1.8
+# ENV MCF_VER 1.8-11.14.0.1278-1.8
+ENV MCF_VER 1.7.10-10.13.2.1230
 RUN mkdir /opt/mcf && \
     curl "http://files.minecraftforge.net/maven/net/minecraftforge/forge/$MCF_VER/forge-$MCF_VER-installer.jar" -o /opt/mcf/installer.jar
 RUN cd /opt/mcf && \
