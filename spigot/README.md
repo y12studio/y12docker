@@ -1,6 +1,21 @@
 ## Docker Image for Minecraft Spigot
 
-[Installation | SpigotMC - High Performance Minecraft](http://www.spigotmc.org/wiki/spigot-installation/)
+* [Installation | SpigotMC - High Performance Minecraft](http://www.spigotmc.org/wiki/spigot-installation/)
+* [Puharesource/TitleManager](https://github.com/Puharesource/TitleManager)
+
+Sat Dec 27 18:46:06 CST 2014
+Disable log4j2.xml/test plugins
+
+```
+$ docker build -t y12docker/spigot:1.8 .
+$ CID=$(docker run -d -p=25565:25565 y12docker/spigot:1.8)
+$ sudo docker-bash $CID
+# cat logs/latest.log
+[10:37:43 INFO]: Preparing spawn area: 71%
+[10:37:44 INFO]: [TitleManager] Enabling TitleManager v1.3.3
+[10:37:44 WARN]: [TitleManager] Vault is not enabled! Disabling permissions and economy based variables!
+[10:37:44 INFO]: Done (26.676s)! For help, type "help" or "?"
+```
 
 Sat Dec 27 16:15:20 CST 2014
 
