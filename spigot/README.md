@@ -3,6 +3,16 @@
 * [Installation | SpigotMC - High Performance Minecraft](http://www.spigotmc.org/wiki/spigot-installation/)
 * [Puharesource/TitleManager](https://github.com/Puharesource/TitleManager)
 
+
+Sat Dec 27 22:11:03 CST 2014
+
+copy spigot jar file to host
+```
+$ CID=$(docker run -d -p=25565:25565 y12docker/spigot:1.8)
+$ docker cp $CID:/opt/spigot/spigot-1.8.jar .
+$ docker cp $CID:/opt/spigot/craftbukkit-1.8.jar .
+```
+
 Sat Dec 27 18:46:06 CST 2014
 Disable log4j2.xml/test plugins
 

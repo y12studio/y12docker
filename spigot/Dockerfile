@@ -18,7 +18,7 @@ RUN apt-get install screen
 
 RUN echo "eula=true" > $APP_DIR/eula.txt
 ADD server.properties $APP_DIR/
-ADD log4j2.xml $APP_DIR/
+# ADD log4j2.xml $APP_DIR/
 ADD plugins $APP_DIR/plugins
 
 ENV MC_SRV /etc/service/spigot/run
