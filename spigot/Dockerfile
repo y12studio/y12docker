@@ -16,6 +16,7 @@ RUN wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/art
 
 RUN echo "eula=true" > $APP_DIR/eula.txt
 ADD server.properties $APP_DIR/
+ADD log4j2.xml $APP_DIR/
 
 ENV MC_SRV /etc/service/spigot/run
 ADD spigot.sh $MC_SRV
