@@ -4,9 +4,18 @@
 * [Puharesource/TitleManager](https://github.com/Puharesource/TitleManager)
 
 
+Mon Dec 29 19:30:20 CST 2014
+
+build the date version
+
+```
+$ docker build --no-cache=true -t y12docker/spigot:1.8.141230 .
+```
+
 Sat Dec 27 22:11:03 CST 2014
 
 copy spigot jar file to host
+
 ```
 $ CID=$(docker run -d -p=25565:25565 y12docker/spigot:1.8)
 $ docker cp $CID:/opt/spigot/spigot-1.8.jar .
