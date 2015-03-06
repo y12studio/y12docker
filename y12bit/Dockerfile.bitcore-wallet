@@ -1,0 +1,16 @@
+FROM y12docker/pbase:15.03
+# https://github.com/phusion/baseimage-docker
+# the Bitcore Wallet Suite
+# http://blog.bitpay.com/2015/03/05/bitcore-wallet.html
+RUN sudo apt-get install -yq build-essential
+RUN mkdir /opt/bws
+WORKDIR /opt/bws
+RUN sudo npm install bitcore-wallet-service
+RUN sudo npm install -g bitcore-wallet
+RUN mkdir node_modules/bitcore-wallet-service/db
+# ---------- cleanup --------------
+#
+# Clean up APT when done.
+RUN apt-get remove -y build-essential && \
+    apt-get autoremove -y && apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
