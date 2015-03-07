@@ -1,4 +1,14 @@
+
+Sat Mar  7 15:21:34 CST 2015
+
+```
+$ docker build -f Dockerfile.bitcore -t y12docker/bitcore .
+$ node opreturn.js
+```
+
+
 Fri Mar  6 12:37:44 CST 2015
+
 ```
 $ docker build -f Dockerfile.bitcore-wallet -t y12docker/bitcore-wallet .
 $ docker images | grep bitcore
