@@ -1,0 +1,3 @@
+testnet=0
+rpcuser=bitcoinrpc
+rpcpassword=GyiRE3tX4qwH8bru47goy44zVhNF2NPiwcagGqpBCB5X

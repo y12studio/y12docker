@@ -1,0 +1,17 @@
+FROM gliderlabs/alpine:3.1
+
+WORKDIR /myapp
+
+RUN apk-install git
+RUN git clone --depth 1 https://github.com/y12studio/y12bitcoin --branch y12coin2015 --single-branch .
+RUN apk-install bash openssl python py-pip libtool boost-dev openssl-dev
+RUN apk-install --virtual build-dependencies build-base automake autoconf
+RUN ./autogen.sh
+RUN ./configure --without-miniupnpc --disable-ipv6 --disable-wallet
+RUN make && make install
+RUN apk del build-dependencies
+RUN rm -rf y12coin2015
+RUN mkdir data
+ADD bitcoin.conf /myapp/
+# bitcoind -server -conf=/myapp/bitcoin.conf -datadir=/myapp/data
+# CMD ["myapp", "start"]
