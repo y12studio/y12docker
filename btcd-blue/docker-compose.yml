@@ -8,10 +8,9 @@ alice:
     links:
         - seeda
     environment:
-        BTCD_PARAM: --regtest --notls
-        BTCD_CONF: addpeer=seeda:12333\n
+        BTCD_PARAM: --regtest --addpeer=seeda:12333
 
 seeda:
     image: btcdblue_btcd
     environment:
-        BTCD_PARAM: --regtest --notls
+        BTCD_PARAM: --regtest
