@@ -1,0 +1,17 @@
+btcd:
+    build: btcd
+    command: /bin/true
+
+alice:
+    hostname: alice
+    image: btcdblue_btcd
+    links:
+        - seeda
+    environment:
+        BTCD_PARAM: --regtest --notls
+        BTCD_CONF: addpeer=seeda:12333\n
+
+seeda:
+    image: btcdblue_btcd
+    environment:
+        BTCD_PARAM: --regtest --notls
