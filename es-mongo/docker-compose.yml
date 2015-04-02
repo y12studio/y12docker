@@ -1,0 +1,33 @@
+es:
+    build: es
+    ports:
+        - "9200:9200"
+    links:
+        - mongo
+
+mongo:
+    hostname: mongo
+    image: mongo:3.0.1
+    command: mongod --replSet "rstest"
+    links:
+        - mongo1
+        - mongo2
+
+mongo1:
+    hostname: mongo1
+    image: mongo:3.0.1
+    command: mongod --replSet "rstest"
+
+mongo2:
+    hostname: mongo2
+    image: mongo:3.0.1
+    command: mongod --replSet "rstest"
+
+kibana4:
+    image: bobrik/kibana4
+    links:
+        - es
+    environment:
+        KIBANA_ES_URL: http://es:9200
+    ports:
+        - "9280:5601"
