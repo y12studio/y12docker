@@ -1,3 +1,52 @@
+Wed Apr  8 10:51:11 CST 2015
+
+```
+$ ./build.sh
+$ docker images | grep bitcoind
+y12docker/bitcoind       0.10.0              db60bf9ba3b1        11 seconds ago      17.56 M
+$ docker run y12docker/bitcoind:0.10.0 bitcoind --version
+Bitcoin Core Daemon version v0.10.0.0-g047a898
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+$ docker run y12docker/bitcoind:0.10.0 bitcoin-cli --version
+Bitcoin Core RPC client version v0.10.0.0-g047a898
+$ docker run -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.10.0 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ mkdir -p btc/data
+$ echo -e "rpcuser=user\\nrpcpassword=pass\\n" > btc/bitcoin.conf
+$ docker run -d -p 8333:8333 -p 8332:8332 -v $PWD/btc:/btc y12docker/bitcoind:0.10.0 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                       COMMAND                CREATED             STATUS              PORTS                                            NAMES
+cb4f47c0ddb7        y12docker/bitcoind:0.10.0   "bitcoind -conf=/btc   7 seconds ago       Up 6 seconds        0.0.0.0:8332->8332/tcp, 0.0.0.0:8333->8333/tcp   elated_cori
+
+$ docker exec cb4f47 bitcoin-cli -conf=/btc/bitcoin.conf getinfo
+{
+    "version" : 100000,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 48,
+    "timeoffset" : 0,
+    "connections" : 4,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1428462659,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+
+$ docker push y12docker/bitcoind:0.10.0
+The push refers to a repository [y12docker/bitcoind] (len: 1)
+Sending image list
+Pushing repository y12docker/bitcoind (1 tags)
+79e3deaa4d7e: Image successfully pushed
+bf0a51e0ef26: Image successfully pushed
+Pushing tag for rev [bf0a51e0ef26] on {https://cdn-registry-1.docker.io/v1/repositories/y12docker/bitcoind/tags/0.10.0}
+
+```
+
+
 Tue Mar 31 10:33:01 CST 2015
 
 [Creating minimal Docker images from dynamically linked ELF binaries](http://blog.oddbit.com/2015/02/05/creating-minimal-docker-images/)
