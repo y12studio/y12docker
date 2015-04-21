@@ -1,0 +1,20 @@
+wordpress:
+    image: wordpress
+    links:
+        - db:mysql
+    ports:
+        - 8080:80
+    environment:
+        WORDPRESS_DB_PASSWORD: dPY1WddGr
+
+db:
+    image: mariadb
+    environment:
+        MYSQL_ROOT_PASSWORD: dPY1WddGr
+
+gcmt:
+    image: y12docker/apbase:1504
+    links:
+        - db
+        - wordpress
+    command: python -m SimpleHTTPServer

@@ -1,5 +1,5 @@
-Wed Apr  8 10:51:11 CST 2015
 
+Wed Apr  8 10:51:11 CST 2015
 ```
 $ ./build.sh
 $ docker images | grep bitcoind
