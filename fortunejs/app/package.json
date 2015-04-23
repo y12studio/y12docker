@@ -1,0 +1,11 @@
+{
+    "name": "fortunejs-app",
+    "description": "forturn.js app",
+    "version": "0.0.1",
+    "dependencies": {
+        "fortune": ">=0.2.4"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}
