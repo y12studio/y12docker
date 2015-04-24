@@ -1,0 +1,23 @@
+pysrv:
+    build: pysrv
+    ports:
+        - "8080:80"
+
+nodesrv:
+    build: nodesrv
+    ports:
+        - "8180:80"
+
+phpsrv:
+    build: phpsrv
+    ports:
+        - "8280:80"
+
+# nginx:
+#    build: nginx
+#    links:
+#        - pysrv
+#        - nodesrv
+#        - phpsrv
+#    ports:
+#        - "80:80"

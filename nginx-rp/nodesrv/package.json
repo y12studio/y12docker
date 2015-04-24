@@ -1,0 +1,11 @@
+{
+    "name": "nginx-rp-app",
+    "description": "nginx reverse proxy app",
+    "version": "0.0.1",
+    "dependencies": {
+        "restify": ">=3.0.2"
+    },
+    "scripts": {
+        "start": "node app.js"
+    }
+}

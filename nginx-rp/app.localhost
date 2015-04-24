@@ -1,0 +1,33 @@
+server {
+    listen 80;
+    server_name  localhost py.localhost;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host      $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+server {
+    listen 80;
+    server_name  node.localhost;
+
+    location / {
+        proxy_pass http://localhost:8180;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+
+server {
+    listen 80;
+    server_name  php.localhost;
+
+    location / {
+        proxy_pass http://localhost:8280;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
