@@ -1,9 +1,11 @@
-install nginx
+install nginx(1.7.12)
 -------------
 ```
+$ add-apt-repository ppa:nginx/development
 $ sudo apt-get update
 $ sudo apt-get install nginx
-$ curl http://localhost/
+$ apt-show-versions nginx
+nginx:all/trusty 1.7.12-1+trusty0 uptodate
 $ sudo cp app.localhost /etc/nginx/sites-available/
 $ sudo ln -s /etc/nginx/sites-available/app.localhost /etc/nginx/sites-enabled/
 $ sudo rm /etc/nginx/sites-enabled/default
