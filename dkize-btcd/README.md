@@ -1,3 +1,48 @@
+build bitcoind 0.10.1
+======================
+
+Mon Apr 27 17:11:23 CST 2015
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.1.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep bitcoind
+y12docker/bitcoind       0.10.1              42b87f71220f        22 seconds ago      17.56 MB
+y12docker/bitcoind       0.10.0              d67c46333a2a        2 weeks ago         17.56 MB
+$ docker run y12docker/bitcoind:0.10.1 bitcoind --version
+Bitcoin Core Daemon version v0.10.1.0-gd8ac901
+$ docker run y12docker/bitcoind:0.10.1 bitcoin-cli --version
+Bitcoin Core RPC client version v0.10.1.0-gd8ac901
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.10.1 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+59cc8380e7413a1aa678561f9674653fe4ea1f786400b9475eb4a1a88c54c387
+
+$ docker ps
+CONTAINER ID        IMAGE                       COMMAND                CREATED             STATUS              PORTS                                            NAMES
+59cc8380e741        y12docker/bitcoind:0.10.1   "bitcoind -conf=/btc   13 seconds ago      Up 12 seconds       0.0.0.0:8332->8332/tcp, 0.0.0.0:8333->8333/tcp   stupefied_hopper
+
+$ docker exec 59cc83 bitcoin-cli -conf=/btc/bitcoin.conf getinfo
+{
+    "version" : 100100,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 304,
+    "timeoffset" : 0,
+    "connections" : 2,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1430126444,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+
+```
+
+build bitcoind 0.10.0
+=====================
 
 Wed Apr  8 10:51:11 CST 2015
 ```
