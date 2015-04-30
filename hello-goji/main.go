@@ -1,16 +1,16 @@
 package main
 
 import (
-	"net/http"
-    "encoding/json"
+	"app/boltlib"
+	"encoding/json"
 	"github.com/zenazn/goji"
 	"github.com/zenazn/goji/web"
-    "app/boltlib"
+	"net/http"
 )
 
 func apiExampleHandler(context web.C, resp http.ResponseWriter, req *http.Request) {
-    p , _ := boltlib.GetPerson("101")
-    encoder := json.NewEncoder(resp)
+	p, _ := boltlib.GetPerson("101")
+	encoder := json.NewEncoder(resp)
 	encoder.Encode(p)
 }
 
@@ -24,7 +24,7 @@ func person(c web.C, w http.ResponseWriter, r *http.Request) {
 	if id == "" {
 		id = "101"
 	}
-    p , _ := boltlib.GetPerson(id)
+	p, _ := boltlib.GetPerson(id)
 	encoder := json.NewEncoder(w)
 	encoder.Encode(p)
 }
@@ -46,13 +46,13 @@ func hello(c web.C, w http.ResponseWriter, r *http.Request) {
 
 func main() {
 
-    boltlib.Open()
-    defer boltlib.Close()
-    boltlib.Initial()
+	boltlib.Open()
+	defer boltlib.Close()
+	boltlib.Initial()
 
 	goji.Handle("/api", apiExampleHandler)
-    goji.Get("/person/:id", person)
-    goji.Get("/hello/:name", hello)
+	goji.Get("/person/:id", person)
+	goji.Get("/hello/:name", hello)
 
 	goji.Handle("/*", http.FileServer(http.Dir("./static")))
 
