@@ -1,6 +1,6 @@
 web1:
     hostname: web1
-    image: y12docker/apbase:1504
+    image: y12docker/apbase:1505
     command: python -m SimpleHTTPServer
     ports:
         - "8000:8000"
@@ -8,9 +8,10 @@ web1:
         - SERVICE_NAME=web1
         - SERVICE_TAGS=web,test
 
+
 web2:
     hostname: web2
-    image: y12docker/apbase:1504
+    image: y12docker/apbase:1505
     command: python -m SimpleHTTPServer
     ports:
         - "8001:8000"
@@ -18,30 +19,27 @@ web2:
         - SERVICE_NAME=web2
         - SERVICE_TAGS=web,test
 
-consul:
+xconsul:
     image: progrium/consul
     hostname: consul
     ports:
         - "8400:8400"
         - "8500:8500"
         - "8600:53/udp"
-    command: -server -bootstrap -ui-dir /ui
+        - "172.17.42.1:53:53/udp"
+    command: -bootstrap-expect 1 -server -ui-dir /ui
 
 registrator:
-  image: gliderlabs/registrator
+  image: gliderlabs/registrator:master
   links:
-      - consul
+      - xconsul
   volumes:
       - /var/run/docker.sock:/tmp/docker.sock
-  command: consul://consul:8500
+  command: "-internal consul://xconsul:8500"
 
 test:
     hostname: test
-    image: y12docker/apbase:1504
+    image: y12docker/apbase:1505
     command: nosetests -v /app/test_http.py
     volumes:
         - app/:/app
-    links:
-        - web1
-        - web2
-        - consul
