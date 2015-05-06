@@ -19,6 +19,8 @@ blog.y12.tw.    14399   IN      A       67.205.56.153
 ;; WHEN: Wed May  6 04:04:48 2015
 ;; MSG SIZE  rcvd: 45
 
+docker push y12docker/apbase:1505
+
 ```
 Sun Apr  5 16:05:27 CST 2015
 ```
