@@ -1,0 +1,6 @@
+alias dc='docker-compose'
+alias alice2sh='docker exec -i -t nvwm_alice_1 bash'
+alias wp2sh='docker exec -i -t nvwm_wordpress_1 bash'
+alias varnish2sh='docker exec -i -t nvwm_varnish_1 bash'
+alias nginx2sh='docker exec -i -t nvwm_nginx_1 bash'
+alias dcup='dc stop && dc rm && dc build && dc up -d && dc logs'

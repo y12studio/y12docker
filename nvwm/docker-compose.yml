@@ -1,0 +1,66 @@
+xconsul:
+    image: progrium/consul
+    hostname: consul
+    ports:
+        - "8400:8400"
+        - "8500:8500"
+        - "8600:53/udp"
+        - "172.17.42.1:53:53/udp"
+    command: -bootstrap-expect 1 -server -ui-dir /ui
+
+registrator:
+  image: gliderlabs/registrator:master
+  links:
+      - xconsul
+  volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+  command: "-internal consul://xconsul:8500"
+
+wordpress:
+    build: wpred
+    links:
+        - mariadb:mysql
+    volumes:
+        - databox/html/:/var/www/html/
+    environment:
+        - WORDPRESS_DB_PASSWORD=1234
+        - SERVICE_NAME=wp
+    ports:
+        - 8280:80
+
+mariadb:
+    image: mariadb:10.0.17
+    volumes:
+        - databox/mysql/:/var/lib/mysql/
+    environment:
+        - MYSQL_ROOT_PASSWORD=1234
+
+varnish:
+    build: varnish
+    links:
+        - wordpress
+    environment:
+        - VARNISH_BACKEND_PORT=80
+        - VARNISH_BACKEND_HOST=wordpress
+        - SERVICE_NAME=varnish
+    ports:
+        - 8180:80
+
+nginx:
+    build: nginx
+    links:
+        - varnish
+    environment:
+        - SERVICE_NAME=nginx
+    ports:
+        - 8080:80
+
+alice:
+    hostname: alice
+    image: y12docker/apbase:1505
+    command: python -m SimpleHTTPServer
+    ports:
+        - "8001:8000"
+    environment:
+        - SERVICE_NAME=alice
+        - SERVICE_TAGS=web,test
