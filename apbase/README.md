@@ -1,3 +1,25 @@
+Wed May  6 11:54:41 CST 2015
+```
+$ docker build -t y12docker/apbase:1505 .
+$ docker run y12docker/apbase:1505 drill blog.y12.tw @8.8.8.8
+;; ->>HEADER<<- opcode: QUERY, rcode: NOERROR, id: 8179
+;; flags: qr rd ra ; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+;; QUESTION SECTION:
+;; blog.y12.tw. IN      A
+
+;; ANSWER SECTION:
+blog.y12.tw.    14399   IN      A       67.205.56.153
+
+;; AUTHORITY SECTION:
+
+;; ADDITIONAL SECTION:
+
+;; Query time: 163 msec
+;; SERVER: 8.8.8.8
+;; WHEN: Wed May  6 04:04:48 2015
+;; MSG SIZE  rcvd: 45
+
+```
 Sun Apr  5 16:05:27 CST 2015
 ```
 $ docker build -t y12docker/apbase:1504 .
