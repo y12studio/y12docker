@@ -1,0 +1,6 @@
+FROM alpine:edge
+RUN apk add --update varnish bash && rm -rf /var/cache/apk/*
+ADD default.vcl /etc/varnish/default.vcl
+ADD start.sh /start.sh
+RUN chmod +x /start.sh
+CMD ["/start.sh"]

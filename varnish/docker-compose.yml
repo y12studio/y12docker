@@ -1,0 +1,24 @@
+wordpress:
+    image: wordpress:4.2.1
+    links:
+        - mariadb:mysql
+    environment:
+        - WORDPRESS_DB_PASSWORD=1234
+    ports:
+        - 8280:80
+
+mariadb:
+    image: mariadb:10.0.17
+    environment:
+        - MYSQL_ROOT_PASSWORD=1234
+
+varnish:
+    build: varnish
+    links:
+        - wordpress
+    environment:
+        - VARNISH_PORT=80
+        - Y_VARNISH_BACKEND_PORT=80
+        - Y_VARNISH_BACKEND_HOST=wordpress
+    ports:
+        - 8180:80
