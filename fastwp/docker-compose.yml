@@ -1,0 +1,13 @@
+wordpress:
+    build: wp
+    links:
+        - mariadb:mysql
+    environment:
+        - WORDPRESS_DB_PASSWORD=Y_DB_PASS
+    ports:
+        - 80:80
+
+mariadb:
+    image: mariadb:10.0.17
+    environment:
+        - MYSQL_ROOT_PASSWORD=Y_DB_PASS
