@@ -1,6 +1,8 @@
 #!/bin/bash
-docker run -v $(pwd)/fastwp:/fastwp y12docker/fastwp:4.2.2 /start.sh
-sudo chown -R "$USER" fastwp
+INSTALL_DIR=fastwp
+DOCKER_IMG=y12docker/fastwp:4.2.2
+docker run -v $(pwd)/${INSTALL_DIR}:/${INSTALL_DIR} ${DOCKER_IMG} /start.sh
+sudo chown -R "$USER" ${INSTALL_DIR}
 echo "===== AFTER INSTALL ====="
 echo "cd fastwp && source alias.sh"
 echo "dcup"
