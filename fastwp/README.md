@@ -2,8 +2,8 @@ install fastwp
 -------
 
 ```
-$ docker run y12docker/fastwp:4.2.2 | bash -
-$ cd fastwp && source alias.sh
+$ docker run -v $(pwd)/fastwp:/fastwp y12docker/fastwp:4.2.2
+$ cd fastwp && . ./post.sh
 $ dcup
 $ wpinstall 192.168.2.73 wp/plugin2.txt
 $ wpinfo
