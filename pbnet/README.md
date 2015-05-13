@@ -15,11 +15,14 @@ Unlike mainnet, in regtest mode only the first 150 blocks pay a reward of 50 bit
 $ cd pbnet && source alias.sh
 $ dcup
 $ dc ps
-$ alice setgenerate true 101 && alice getinfo
-$ bob setgenerate true 10 && bob getinfo
+$ alice setgenerate true 101
+$ alice getbalance
+$ bob setgenerate true 10
+$ bob getbalance
 $ bob getpeerinfo
 $ alice sendtoaddress $(bob getnewaddress) 10.0
-$ alice getbalance && bob getbalance
+$ alice getbalance
+$ bob getbalance
 539.99999808
 0.00000000
 $ bob setgenerate true 6 && bob getbalance

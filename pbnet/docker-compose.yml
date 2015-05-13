@@ -24,3 +24,13 @@ bob:
         -conf=/btc/bitcoin.conf -datadir=/btc/data
         -addnode=alice:18333
         -rpcallowip=172.17.0.0/16 -rpcport=18332
+
+carol:
+    image: y12docker/bitcoind:0.10.1
+    links:
+        - bob
+    command: >
+        bitcoind -regtest -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -addnode=bob:18333
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
