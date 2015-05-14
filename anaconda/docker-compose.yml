@@ -1,0 +1,7 @@
+notebook:
+    build: scipysrv
+    ports:
+        - 80:8888
+    environment:
+        - PASSWORD=pass1234
+        - USE_HTTP=1
