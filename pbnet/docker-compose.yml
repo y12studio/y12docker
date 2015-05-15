@@ -34,3 +34,7 @@ carol:
         -conf=/btc/bitcoin.conf -datadir=/btc/data
         -addnode=bob:18333
         -rpcallowip=172.17.0.0/16 -rpcport=18332
+
+cron:
+    build: cron
+    
