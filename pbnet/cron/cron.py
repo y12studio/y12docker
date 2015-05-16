@@ -42,9 +42,9 @@ def bad_task_1():
     print(1/0)
 
 scheduler = TaskScheduler()
-scheduler.every(3).seconds.do(job3)
-scheduler.every(5).seconds.do(job5)
-scheduler.every(7).seconds.do(bad_task_1)
+scheduler.every(300).seconds.do(job3)
+#scheduler.every(5).seconds.do(job5)
+#scheduler.every(7).seconds.do(bad_task_1)
 
 while True:
     scheduler.run_pending()

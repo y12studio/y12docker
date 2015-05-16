@@ -1,9 +1,17 @@
 seed:
     image: y12docker/bitcoind:0.10.1
+    volumes:
+        - blockchain:/btc/data
     command: >
         bitcoind -regtest -txindex -disablewallet -port=18333
         -conf=/btc/bitcoin.conf -datadir=/btc/data
         -rpcallowip=172.17.0.0/16 -rpcport=18332
+abe:
+    build: abe
+    volumes_from:
+        - seed
+    ports:
+        - 8081:80
 
 alice:
     image: y12docker/bitcoind:0.10.1
@@ -37,4 +45,3 @@ carol:
 
 cron:
     build: cron
-    
