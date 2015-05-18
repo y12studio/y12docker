@@ -34,7 +34,6 @@
         </md-toolbar>
 
         <md-content layout="column" flex class="md-padding">
-            <h4>ADDR:{{addr}}</h4>
             <form name="projectForm">
                 <md-input-container>
                     <label>Description</label>
@@ -45,6 +44,19 @@
                     </div>
                 </md-input-container>
             </form>
+            <section layout="row" layout-sm="column" layout-align="center center">
+                <md-button class="md-raised" ng-click="getAddress()">Get Address</md-button>
+            </section>
+            <h4>ADDRRESS:{{addr}}</h4>
+            <section layout="row" layout-sm="column" layout-align="center center">
+                <md-button class="md-raised" ng-click="getUnspent()">Get UXTO</md-button>
+            </section>
+            <ul ng-repeat="uxto in uxtos">
+                <li>block_number : {{uxto.block_number}}<BR/>
+                    tx_hash : {{uxto.tx_hash}}<BR/>
+                    value : {{uxto.value}}
+                </li>
+            </ul>
         </md-content>
     </div>
     <script src="js/bitcore/0.12.5/bitcore.min.js"></script>
@@ -58,7 +70,7 @@
     <script src='https://cdn.rawgit.com/angular/bower-material/master/angular-material.js'></script>
     <script>
         angular.module('MyApp', ['ngMaterial', 'ngMessages'])
-            .controller('AppCtrl', function($scope) {
+            .controller('AppCtrl', function($scope, $http) {
 
                 var bitcore = require('bitcore');
                 var Networks = bitcore.Networks;
@@ -84,12 +96,27 @@
                     rate: 500
                 };
 
-                var value = new Buffer($scope.project.description);
-                var hash = bitcore.crypto.Hash.sha256(value);
-                var bn = bitcore.crypto.BN.fromBuffer(hash);
-                var address = new bitcore.PrivateKey(bn).toAddress();
-                $scope.addr = address.toString();
-                console.log(address.toString());
+                $scope.getAddress = function() {
+                    var value = new Buffer($scope.project.description);
+                    var hash = bitcore.crypto.Hash.sha256(value);
+                    var bn = bitcore.crypto.BN.fromBuffer(hash);
+                    var address = new bitcore.PrivateKey(bn).toAddress();
+                    $scope.addr = address.toString();
+                }
+
+                $scope.getUnspent = function() {
+                    //var unspenturl = 'http://192.168.2.73/abe/unspent/' + $scope.addr + '?format=json';
+                    var unspenturl = '/abe/unspent/' + $scope.addr + '?format=json';
+                    $http.get(unspenturl).
+                    success(function(data, status, headers, config) {
+                        console.log(data);
+                        $scope.uxtos = data['unspent_outputs'];
+                    }).
+                    error(function(data, status, headers, config) {
+                        // log error
+                    });
+                }
+
             });
     </script>
 
