@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <link rel='stylesheet prefetch' href='https://cdn.rawgit.com/angular/bower-material/master/angular-material.css'>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1" />
     <meta charset="UTF-8">
@@ -34,27 +34,35 @@
         </md-toolbar>
 
         <md-content layout="column" flex class="md-padding">
+            <h3>Step 1</h3>
             <form name="projectForm">
                 <md-input-container>
-                    <label>Description</label>
-                    <input md-maxlength="30" required name="description" ng-model="project.description">
-                    <div ng-messages="projectForm.description.$error">
+                    <label>Passcode</label>
+                    <input md-maxlength="30" required name="passcode" ng-model="project.passcode">
+                    <div ng-messages="projectForm.passcode.$error">
                         <div ng-message="required">This is required.</div>
                         <div ng-message="md-maxlength">The name has to be less than 30 characters long.</div>
                     </div>
                 </md-input-container>
             </form>
             <section layout="row" layout-sm="column" layout-align="center center">
+                <md-button class="md-raised" ng-click="getRanPasscode()">Random Passcode</md-button>
+            </section>
+            <h3>Step 2</h3>
+            <section layout="row" layout-sm="column" layout-align="center center">
                 <md-button class="md-raised" ng-click="getAddress()">Get Address</md-button>
             </section>
-            <h4>ADDRRESS:{{addr}}</h4>
+            <h4>
+                <span style="margin-right:2em;color:#acacac">ADDRRESS:</span>{{addr}}</h4>
             <section layout="row" layout-sm="column" layout-align="center center">
+                <md-button class="md-primary" ng-href="/abe/address/{{addr}}" target="_blank">Abe Browser</md-button>
+                <md-button class="md-primary" ng-href="/fc/faucet/{{addr}}/1.68" target="_blank">Faucet 1.68</md-button>
                 <md-button class="md-raised" ng-click="getUnspent()">Get UXTO</md-button>
             </section>
             <ul ng-repeat="uxto in uxtos">
-                <li>block_number : {{uxto.block_number}}<BR/>
-                    tx_hash : {{uxto.tx_hash}}<BR/>
-                    value : {{uxto.value}}
+                <li>block_number : {{uxto.block_number}}
+                    <BR/> tx_hash : {{uxto.tx_hash}}
+                    <BR/> value : {{uxto.value}}
                 </li>
             </ul>
         </md-content>
@@ -66,8 +74,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
-
-    <script src='https://cdn.rawgit.com/angular/bower-material/master/angular-material.js'></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.js"></script>
     <script>
         angular.module('MyApp', ['ngMaterial', 'ngMessages'])
             .controller('AppCtrl', function($scope, $http) {
@@ -90,14 +97,18 @@
                 });
                 Networks.defaultNetwork = Networks.get('regnet');
                 var Buffer = bitcore.deps.Buffer;
-                var ranNum = Math.floor((Math.random() * 100000) + 1);
                 $scope.project = {
-                    description: 'Red Taichung ' + ranNum,
+                    passcode: 'Red TaiChung MayDay',
                     rate: 500
                 };
 
+                $scope.getRanPasscode = function() {
+                    var ranNum = Math.floor((Math.random() * 100000) + 1);
+                    $scope.project.passcode = 'Green TaiChung ' + ranNum
+                }
+
                 $scope.getAddress = function() {
-                    var value = new Buffer($scope.project.description);
+                    var value = new Buffer($scope.project.passcode);
                     var hash = bitcore.crypto.Hash.sha256(value);
                     var bn = bitcore.crypto.BN.fromBuffer(hash);
                     var address = new bitcore.PrivateKey(bn).toAddress();
