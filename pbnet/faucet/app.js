@@ -33,6 +33,9 @@ var brpc = new BRpc();
 
 function reqFaucet(req, res, next) {
     var amount = parseFloat(req.params.amount);
+    if(amount > 2 || amount < 0.0001){
+        amount = +(1+Math.random()).toFixed(6);
+    }
     brpc.sendToAddress(req.params.addr, amount, function(error, parsedBuf) {
         next.ifError(error);
         console.log(parsedBuf);

@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1" />
     <meta charset="UTF-8">
+    <title>PBNET - Y12STUDIO</title>
     <style>
         .menuBtn {
             background-color: transparent;
@@ -57,12 +58,12 @@
             <section layout="row" layout-sm="column" layout-align="center center">
                 <md-button class="md-primary" ng-href="/abe/address/{{addr}}" target="_blank">Abe Browser</md-button>
                 <md-button class="md-primary" ng-href="/fc/faucet/{{addr}}/1.68" target="_blank">Faucet 1.68</md-button>
-                <md-button class="md-raised" ng-click="getUnspent()">Get UXTO</md-button>
+                <md-button class="md-raised" ng-click="getUnspent()">Get Balance</md-button>
             </section>
-            <ul ng-repeat="uxto in uxtos">
-                <li>block_number : {{uxto.block_number}}
-                    <BR/> tx_hash : {{uxto.tx_hash}}
-                    <BR/> value : {{uxto.value}}
+            <ul ng-repeat="utxo in utxos">
+                <li>block_number : {{utxo.block_number}}
+                    <BR/> tx_hash : <a href="/abe/tx/{{utxo.tx_hash}}" target="_blank">{{utxo.tx_hash}}</a>
+                    <BR/> value : {{utxo.value}}
                 </li>
             </ul>
         </md-content>
@@ -121,7 +122,7 @@
                     $http.get(unspenturl).
                     success(function(data, status, headers, config) {
                         console.log(data);
-                        $scope.uxtos = data['unspent_outputs'];
+                        $scope.utxos = data['unspent_outputs'];
                     }).
                     error(function(data, status, headers, config) {
                         // log error

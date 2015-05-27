@@ -18,8 +18,8 @@ var BRpc = function() {
 
     var txids = [];
 
-    this.generate = function() {
-        rpc.setGenerate(true,1,function(error, parsedBuf) {
+    this.generate = function(num) {
+        rpc.setGenerate(true, num, function(error, parsedBuf) {
             console.log(parsedBuf);
         });
     };
@@ -58,6 +58,10 @@ var BRpc = function() {
 };
 
 
+setTimeout(function() {
+    // first 99 blocks
+    brpc.generate(99);
+}, 8000);
 
 
 var CronEmitter = require("cron-emitter").CronEmitter;
@@ -83,7 +87,7 @@ var counter10s = 0;
 emitter.on("every_ten_seconds", function() {
     "use strict";
     console.log("EVENT: Got ten seconds event. ", counter10s++);
-    brpc.generate();
+    brpc.generate(1);
     //if (emitter.hasEvent("every_three_seconds")) {
     //    console.log("  Stopping every_three_seconds.");
     //    emitter.remove("every_three_seconds");
