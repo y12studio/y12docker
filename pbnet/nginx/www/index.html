@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <meta name="viewport" content="initial-scale=1" />
     <meta charset="UTF-8">
@@ -60,12 +60,20 @@
                 <md-button class="md-primary" ng-href="/fc/faucet/{{addr}}/1.68" target="_blank">Faucet 1.68</md-button>
                 <md-button class="md-raised" ng-click="getUnspent()">Get Balance</md-button>
             </section>
-            <ul ng-repeat="utxo in utxos">
-                <li>block_number : {{utxo.block_number}}
-                    <BR/> tx_hash : <a href="/abe/tx/{{utxo.tx_hash}}" target="_blank">{{utxo.tx_hash}}</a>
-                    <BR/> value : {{utxo.value}}
-                </li>
-            </ul>
+            <div layout="row" ng-repeat="item in utxos">
+                <div>
+                    <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
+                        Block#{{item.block_number}}
+                        <span style="margin-left:0.5em">BTC {{item.value}}</span>
+                        <span ng-if="exists(item, selected)">*</span>
+                    </md-checkbox>
+                </div>
+                <div>
+                    <md-button class="md-primary" ng-href="/abe/tx/{{item.tx_hash}}" target="_blank">{{ item.tx_hash|limitTo:8}}....</md-button>
+                </div>
+            </div>
+            <h2 class="md-title">Selected UTXOs</h2>
+            <code style="display: block; padding: 8px;">{{calc(selected) | json}}</code>
         </md-content>
     </div>
     <script src="js/bitcore/0.12.5/bitcore.min.js"></script>
@@ -75,7 +83,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.0/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
     <script>
         angular.module('MyApp', ['ngMaterial', 'ngMessages'])
             .controller('AppCtrl', function($scope, $http) {
@@ -115,6 +123,51 @@
                     var address = new bitcore.PrivateKey(bn).toAddress();
                     $scope.addr = address.toString();
                 }
+
+                $scope.devitems = [{
+                    tx_hash: 'd1ed208ae840e9027f9699ed5480b4ef781e124bf307fbe76a51d6e9152e9001',
+                    block_number:101,
+                    tx_output_n: 0,
+                    value: 19823
+                }, {
+                    tx_hash: '4061c75ac4ddff2f3e16eefdf6466e38cbc32d295bf5b0e087ba143af9141e64',
+                    block_number:103,
+                    tx_output_n: 1,
+                    value: 12345
+                }, {
+                    tx_hash: 'b0ede408d5e30975e88b9ed9da950f2468b77ce86986144a00eef286f9adc1bd',
+                    block_number:107,
+                    tx_output_n: 0,
+                    value: 23456
+                }];
+
+                $scope.selected = [];
+
+                $scope.toggle = function(item, list) {
+                    var idx = list.indexOf(item);
+                    if (idx > -1) list.splice(idx, 1);
+                    else list.push(item);
+                };
+
+                $scope.exists = function(item, list) {
+                    return list.indexOf(item) > -1;
+                };
+
+                $scope.calc = function(list) {
+
+                    var total = 0;
+                    list.forEach(function(element,index,array){
+                        total += element['value'];
+                    });
+
+                    r = {
+                        amount: total,
+                        utxos: list
+                    };
+
+                    return r;
+                };
+
 
                 $scope.getUnspent = function() {
                     //var unspenturl = 'http://192.168.2.73/abe/unspent/' + $scope.addr + '?format=json';
