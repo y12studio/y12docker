@@ -1,21 +1,36 @@
-var am = angular.module('MyApp', ['ngMaterial', 'ngMessages']);
+var LOCALTEST = false;
 
+var am = angular.module('MyApp', ['ngMaterial', 'ngMessages']);
 am.service('dataSrv', function() {
+    // abe json output 'http://192.168.2.73/abe/unspent/addrxxxxxx?format=json'
     this.devitems = [{
-        tx_hash: 'd1ed208ae840e9027f9699ed5480b4ef781e124bf307fbe76a51d6e9152e9001',
-        block_number: 101,
-        tx_output_n: 0,
-        value: 1982300123
+        "block_number": 103,
+        "script": "76a914e4bd42a5a5002fde3339b882ea3d0f0046ead08888ac",
+        "tx_hash": "91778f793600d0d19539de069d573b2d95e8ea1fe1d4a752fa1ae4adbc58b1ab",
+        "tx_output_n": 1,
+        "value": 168000000,
+        "value_hex": "a037a00"
     }, {
-        tx_hash: '4061c75ac4ddff2f3e16eefdf6466e38cbc32d295bf5b0e087ba143af9141e64',
-        block_number: 103,
-        tx_output_n: 1,
-        value: 123452343
+        "block_number": 103,
+        "script": "76a914e4bd42a5a5002fde3339b882ea3d0f0046ead08888ac",
+        "tx_hash": "120cdc3dc0f40db6b381c124d41e8cc859e6ee7b45ae19dce123b685d2a9b1d3",
+        "tx_output_n": 1,
+        "value": 104300300,
+        "value_hex": "6377f0c"
     }, {
-        tx_hash: 'b0ede408d5e30975e88b9ed9da950f2468b77ce86986144a00eef286f9adc1bd',
-        block_number: 107,
-        tx_output_n: 0,
-        value: 234560000
+        "block_number": 104,
+        "script": "76a914e4bd42a5a5002fde3339b882ea3d0f0046ead08888ac",
+        "tx_hash": "e39c3eb6bfee83b3dca77eb55deac31b1ff9960578f9ba1b84120369f6133aa4",
+        "tx_output_n": 0,
+        "value": 184037100,
+        "value_hex": "af82eec"
+    }, {
+        "block_number": 105,
+        "script": "76a914e4bd42a5a5002fde3339b882ea3d0f0046ead08888ac",
+        "tx_hash": "a5886bc64c6a28494e93c2efcae9ce2e5628b654136b7a72dceacf7e74e394e9",
+        "tx_output_n": 1,
+        "value": 195683400,
+        "value_hex": "ba9e448"
     }];
     this.sayHello = function(name) {
         return "Hello, World!" + name;
@@ -25,6 +40,8 @@ am.service('dataSrv', function() {
 am.service('bcSrv', function() {
     var bitcore = require('bitcore');
     var Networks = bitcore.Networks;
+    var Transaction = bitcore.Transaction;
+    var UnspentOutput = bitcore.Transaction.UnspentOutput;
     // bitcoin/chainparams.cpp at master · bitcoin/bitcoin
     // https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp
     Networks.add({
@@ -56,9 +73,31 @@ am.service('bcSrv', function() {
         return pk.toAddress();
     }
 
+    this.signTx = function(passcode, utxosRaw, toAddress, amount, chAddress) {
+        var pk = this.getPrikey(passcode);
+
+        var utxos = utxosRaw.map(function(obj) {
+            return new UnspentOutput(obj);
+        });
+
+        var tx = new Transaction()
+            .from(utxos) // Feed information about what unspent outputs one can use
+            .to(toAddress, amount) // Add an output with the given amount of satoshis
+            .change(chAddress) // Sets up a change address where the rest of the funds will go
+            .sign(pk); // Signs all the inputs it can
+        console.log(tx.toJSON());
+        return tx.serialize();
+    }
+
+    this.utxoExample = new UnspentOutput({
+        "txId": "a0a08e397203df68392ee95b3f08b0b3b3e2401410a38d46ae0874f74846f2e9",
+        "outputIndex": 0,
+        "address": "mgJT8iegL4f9NCgQFeFyfvnSw1Yj4M5Woi",
+        "script": "76a914089acaba6af8b2b4fb4bed3b747ab1e4e60b496588ac",
+        "satoshis": 70000
+    });
 });
 
-var LOCALTEST = false;
 
 am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
 
@@ -71,15 +110,19 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
         var ranNum = Math.floor((Math.random() * 100000) + 1);
         // console.log(helloSrv.sayHello(ranNum));
         $scope.project.passcode = 'Green TaiChung ' + ranNum;
+        $scope.getAddress();
     }
 
     $scope.getAddress = function() {
         $scope.addr = bcSrv.getAddress($scope.project.passcode).toString();
     }
 
-    if (LOCALTEST) {
-        $scope.utxos = dataSrv.devitems;
-    }
+    $scope.sendto = {
+        address: 'n2NR5q7Sffy8KdfPKkBxxjejMrSM8HFNVk',
+        amount: 190000,
+    };
+
+    $scope.getAddress();
 
     $scope.selected = [];
 
@@ -93,20 +136,49 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
         return list.indexOf(item) > -1;
     };
 
+    $scope.txSign = function() {
+        pcode = $scope.project.passcode;
+        toAddr = $scope.sendto.address;
+        toAmount = $scope.sendto.amount;
+        chAddr = $scope.addr;
+        utxosRaw = $scope.calcResult.utxos;
+        rawtx = bcSrv.signTx(pcode, utxosRaw, toAddr, toAmount, chAddr);
+        $scope.txSignResult = rawtx;
+    }
+
+    $scope.calcResult = {};
+
     $scope.calc = function(list) {
         var total = 0;
         list.forEach(function(element, index, array) {
             total += element['value'];
         });
+
+        var bcutxos = list.map(function(obj) {
+            return {
+                txid: obj['tx_hash'],
+                script: obj['script'],
+                outputIndex: obj['tx_output_n'],
+                satoshis: obj['value']
+            };
+        });
         r = {
             amount: total,
-            utxos: list
+            btc: total / 100000000,
+            utxos: bcutxos
         };
+        $scope.calcResult = r;
         return r;
     };
 
 
     $scope.getUnspent = function() {
+
+        if (LOCALTEST) {
+            $scope.utxos = dataSrv.devitems;
+            return;
+        }
+
         //var unspenturl = 'http://192.168.2.73/abe/unspent/' + $scope.addr + '?format=json';
         var unspenturl = '/abe/unspent/' + $scope.addr + '?format=json';
         $http.get(unspenturl).
