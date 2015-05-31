@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <meta name="viewport" content="initial-scale=1" />
     <meta charset="UTF-8">
     <title>PBNET - Y12STUDIO</title>
@@ -64,7 +65,7 @@
                 <div>
                     <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
                         Block#{{item.block_number}}
-                        <span style="margin-left:0.5em">BTC {{item.value}}</span>
+                        <span style="margin-left:0.5em"><i class="fa fa-btc"></i>{{item.value/100000000}}</span>
                         <span ng-if="exists(item, selected)">*</span>
                     </md-checkbox>
                 </div>
@@ -84,107 +85,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
-    <script>
-        angular.module('MyApp', ['ngMaterial', 'ngMessages'])
-            .controller('AppCtrl', function($scope, $http) {
-
-                var bitcore = require('bitcore');
-                var Networks = bitcore.Networks;
-                // bitcoin/chainparams.cpp at master · bitcoin/bitcoin
-                // https://github.com/bitcoin/bitcoin/blob/master/src/chainparams.cpp
-                Networks.add({
-                    name: 'regnet',
-                    alias: 'regnet',
-                    pubkeyhash: 0x6f,
-                    privatekey: 0xef,
-                    scripthash: 0xc4,
-                    xpubkey: 0x043587cf,
-                    xprivkey: 0x04358394,
-                    networkMagic: 0xfabfb5da,
-                    port: 18333,
-                    dnsSeeds: [],
-                });
-                Networks.defaultNetwork = Networks.get('regnet');
-                var Buffer = bitcore.deps.Buffer;
-                $scope.project = {
-                    passcode: 'Red TaiChung MayDay',
-                    rate: 500
-                };
-
-                $scope.getRanPasscode = function() {
-                    var ranNum = Math.floor((Math.random() * 100000) + 1);
-                    $scope.project.passcode = 'Green TaiChung ' + ranNum
-                }
-
-                $scope.getAddress = function() {
-                    var value = new Buffer($scope.project.passcode);
-                    var hash = bitcore.crypto.Hash.sha256(value);
-                    var bn = bitcore.crypto.BN.fromBuffer(hash);
-                    var address = new bitcore.PrivateKey(bn).toAddress();
-                    $scope.addr = address.toString();
-                }
-
-                $scope.devitems = [{
-                    tx_hash: 'd1ed208ae840e9027f9699ed5480b4ef781e124bf307fbe76a51d6e9152e9001',
-                    block_number:101,
-                    tx_output_n: 0,
-                    value: 19823
-                }, {
-                    tx_hash: '4061c75ac4ddff2f3e16eefdf6466e38cbc32d295bf5b0e087ba143af9141e64',
-                    block_number:103,
-                    tx_output_n: 1,
-                    value: 12345
-                }, {
-                    tx_hash: 'b0ede408d5e30975e88b9ed9da950f2468b77ce86986144a00eef286f9adc1bd',
-                    block_number:107,
-                    tx_output_n: 0,
-                    value: 23456
-                }];
-
-                $scope.selected = [];
-
-                $scope.toggle = function(item, list) {
-                    var idx = list.indexOf(item);
-                    if (idx > -1) list.splice(idx, 1);
-                    else list.push(item);
-                };
-
-                $scope.exists = function(item, list) {
-                    return list.indexOf(item) > -1;
-                };
-
-                $scope.calc = function(list) {
-
-                    var total = 0;
-                    list.forEach(function(element,index,array){
-                        total += element['value'];
-                    });
-
-                    r = {
-                        amount: total,
-                        utxos: list
-                    };
-
-                    return r;
-                };
-
-
-                $scope.getUnspent = function() {
-                    //var unspenturl = 'http://192.168.2.73/abe/unspent/' + $scope.addr + '?format=json';
-                    var unspenturl = '/abe/unspent/' + $scope.addr + '?format=json';
-                    $http.get(unspenturl).
-                    success(function(data, status, headers, config) {
-                        console.log(data);
-                        $scope.utxos = data['unspent_outputs'];
-                    }).
-                    error(function(data, status, headers, config) {
-                        // log error
-                    });
-                }
-
-            });
-    </script>
-
+    <script src="app.js"></script>
 </body>
 
 </html>
