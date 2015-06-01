@@ -62,6 +62,11 @@ cron:
     build: cron
     links:
         - keeper
+    environment:
+        - Y_KEEPER_HOST=keeper
+        - Y_KEEPER_PORT=18332
+        - Y_KEEPER_USER=user
+        - Y_KEEPER_PASS=pass
 
 faucet:
     build: faucet
@@ -69,3 +74,8 @@ faucet:
         - keeper
     ports:
         - 8581:8581
+    environment:
+        - Y_KEEPER_HOST=keeper
+        - Y_KEEPER_PORT=18332
+        - Y_KEEPER_USER=user
+        - Y_KEEPER_PASS=pass

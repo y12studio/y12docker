@@ -6,10 +6,10 @@ var BRpc = function() {
 
     var config = {
         protocol: 'http',
-        user: 'user',
-        pass: 'pass',
-        host: 'keeper',
-        port: '18332',
+        user: process.env.Y_KEEPER_USER,
+        pass: process.env.Y_KEEPER_PASS,
+        host: process.env.Y_KEEPER_HOST,
+        port: process.env.Y_KEEPER_PORT,
     };
 
     var rpc = new RpcClient(config);
