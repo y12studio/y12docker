@@ -173,7 +173,6 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
 
 
     $scope.getUnspent = function() {
-
         if (LOCALTEST) {
             $scope.utxos = dataSrv.devitems;
             return;
@@ -188,6 +187,25 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
         }).
         error(function(data, status, headers, config) {
             // log error
+            console.log(data);
+        });
+    };
+
+
+    $scope.broadcast = function() {
+
+        hexstr = $scope.txSignResult;
+        // api /fc/broadcast;
+        var turl = '/fc/broadcast';
+        $http.post(turl, {
+            hex: hexstr
+        }).
+        success(function(data, status, headers, config) {
+            console.log(data);
+        }).
+        error(function(data, status, headers, config) {
+            // log error
+            console.log(data);
         });
     }
 

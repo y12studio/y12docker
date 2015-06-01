@@ -27,6 +27,13 @@ var BRpc = function() {
     this.sendToAddress = function(addr, amount, callback) {
         rpc.sendToAddress(addr, amount, callback);
     };
+
+
+    // sendRawTransaction
+    this.sendRawTransaction = function(hexStr, callback){
+        console.log('rpc.sendRawTransaction:'+hexStr);
+        rpc.sendRawTransaction(hexStr, callback);
+    }
 };
 
 var brpc = new BRpc();
@@ -51,6 +58,20 @@ function reqFaucet(req, res, next) {
 
 }
 
+function reqBroadcast(req, res, next) {
+    console.log('[BROADCAST] ' + req.params.hex);
+    brpc.sendRawTransaction(req.params.hex, function(error, parseBuf){
+        next.ifError(error);
+        console.log(parseBuf);
+        res.send({
+            txid: parseBuf.result,
+            error: false,
+            msg: 'OK'
+        });
+        next();
+    });
+}
+
 function hello(req, res, next) {
     res.send({
         hello: req.params.name
@@ -59,14 +80,10 @@ function hello(req, res, next) {
 }
 
 var server = restify.createServer();
-
+server.use(restify.bodyParser());
+server.post('/broadcast', reqBroadcast);
 server.get('/faucet/:addr/:amount', reqFaucet);
 server.get('/hello/:name', hello);
-
-server.post('/hello', function create(req, res, next) {
-    res.send(201, Math.random().toString(36).substr(3, 8));
-    next();
-});
 
 server.listen(8581, function() {
     console.log('%s listening at %s', server.name, server.url);
