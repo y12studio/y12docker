@@ -1,3 +1,56 @@
+build bitcoin core 0.10.2
+=======
+
+Tue Jun  2 12:07:29 CST 2015
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.2.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep bitcoind
+y12docker/bitcoind       0.10.2              7c42c250bb4a        41 seconds ago      17.57 MB
+y12docker/bitcoind       0.10.1              42b87f71220f        5 weeks ago         17.56 MB
+$ docker run y12docker/bitcoind:0.10.2 bitcoind --version
+Bitcoin Core Daemon version v0.10.2.0-g16f4560
+
+$ docker run y12docker/bitcoind:0.10.2 bitcoin-cli --version
+Bitcoin Core RPC client version v0.10.2.0-g16f4560
+
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.10.2 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+53d6837b0d552c846289c04e2cf43ae2fa459764c2f5466664fda302eb9fd508
+$ docker ps
+CONTAINER ID        IMAGE                       COMMAND                CREATED             STATUS              PORTS                                            NAMES
+53d6837b0d55        y12docker/bitcoind:0.10.2   "bitcoind -conf=/btc   18 seconds ago      Up 17 seconds       0.0.0.0:8332->8332/tcp, 0.0.0.0:8333->8333/tcp   cranky_colden
+
+$ docker exec 53d683 bitcoin-cli -conf=/btc/bitcoin.conf getinfo
+
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 816,
+    "timeoffset" : -1,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1433218448,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+
+$ docker push y12docker/bitcoind:0.10.2  The push refers to a repository [y12docker/bitcoind] (len: 1)
+Sending image list
+Pushing repository y12docker/bitcoind (1 tags)
+bc02dbdd50e8: Image successfully pushed
+7c42c250bb4a: Image successfully pushed
+Pushing tag for rev [7c42c250bb4a] on {https://cdn-registry-1.docker.io/v1/repositories/y12docker/bitcoind/tags/0.10.2}
+
+```
+
+
 build bitcoind 0.10.1
 ======================
 
