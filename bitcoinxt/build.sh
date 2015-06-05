@@ -4,10 +4,10 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=0.10.1
+VERSION=0.10.2A
 DIRBUILD=~/tmp/bitcoinxt
 #
-# wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.1.tar.gz | tar xvz -C ~/tmp
+# wget -qO- https://github.com/bitcoinxt/bitcoinxt/archive/v0.10.2A.tar.gz | tar xvz -C ~/tmp
 #
 rm -rf ${DIRBUILD}
 cp -r ~/tmp/bitcoinxt-${VERSION} ${DIRBUILD}
