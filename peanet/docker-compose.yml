@@ -1,0 +1,18 @@
+alice:
+    image: y12docker/elements-alpha:v150610
+    command: >
+        alphad -regtest=1 -testnet=0 -txindex -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
+        -tracksidechain=all -blindtrust=true
+
+bob:
+    image: y12docker/elements-alpha:v150610
+    links:
+        - alice
+    command: >
+        alphad -regtest=1 -testnet=0 -txindex -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
+        -tracksidechain=all -blindtrust=true
+        -addnode=alice:18333
