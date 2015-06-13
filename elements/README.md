@@ -1,6 +1,20 @@
 Build [ElementsProject/elements](https://github.com/ElementsProject/elements)
 ======
 
+Sat Jun 13 09:19:58 CST 2015
+
+```
+$ cd ~/tmp/elements && git pull
+$ ./build.sh
+$ docker run y12docker/elements-alpha:v150613 alphad --version
+
+Elements Alpha Daemon version v0.10.2.0-8865ad9
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+
+This is experimental software.
+
+```
+
 Wed Jun 10 11:58:14 CST 2015
 
 ```

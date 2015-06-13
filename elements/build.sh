@@ -4,7 +4,7 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=v150610
+VERSION=v150613
 DIRBUILD=~/tmp/elements
 #
 # git clone --depth 1 https://github.com/ElementsProject/elements && cd elements && git checkout alpha
