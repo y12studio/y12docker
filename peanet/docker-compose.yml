@@ -1,5 +1,5 @@
 alice:
-    image: y12docker/elements-alpha:v150610
+    image: y12docker/elements-alpha:v150613
     command: >
         alphad -regtest=1 -testnet=0 -txindex -port=18333
         -conf=/btc/bitcoin.conf -datadir=/btc/data
@@ -7,7 +7,7 @@ alice:
         -tracksidechain=all -blindtrust=true
 
 bob:
-    image: y12docker/elements-alpha:v150610
+    image: y12docker/elements-alpha:v150613
     links:
         - alice
     command: >
@@ -16,3 +16,13 @@ bob:
         -rpcallowip=172.17.0.0/16 -rpcport=18332
         -tracksidechain=all -blindtrust=true
         -addnode=alice:18333
+
+cron:
+    build: cron
+    links:
+        - alice
+    environment:
+        - Y_KEEPER_HOST=alice
+        - Y_KEEPER_PORT=18332
+        - Y_KEEPER_USER=user
+        - Y_KEEPER_PASS=pass

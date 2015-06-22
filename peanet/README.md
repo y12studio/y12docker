@@ -1,6 +1,194 @@
 log
 ------
 
+Mon Jun 22 22:09:09 CST 2015
+
+```
+$ dcup
+$ alice getinfo
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 10500000.00000000,
+    "blocks" : 12,
+    "timeoffset" : 0,
+    "connections" : 1,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1434982145,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
+$ bob getbalance
+0.00000000
+$ alice listunspent
+[
+    {
+        "txid" : "7475d1130a23c200b69fb2bb69b4b4933e83e6822190995ada6372427bdae69e",
+        "vout" : 0,
+        "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQYbQn1hiJFRtnUAMHJmMyTw4hn51LLwJSH",
+        "account" : "",
+        "scriptPubKey" : "76a914e0103b03d5272c5f6b599b211b05646cf41df85588ac",
+        "serValue" : "00c2eb0b00000000",
+        "amount" : 2.00000000,
+        "blinder" : "f34b06f174515ee3502040a30202f7292a462c40005788d7da1b3289e6781f4c",
+        "confirmations" : 4,
+        "spendable" : true
+    },
+    {
+        "txid" : "7475d1130a23c200b69fb2bb69b4b4933e83e6822190995ada6372427bdae69e",
+        "vout" : 1,
+        "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQTn1YDifRcZKRd4pzx3ogErYKP3deGv9AJ",
+        "scriptPubKey" : "76a914ab38c77c7ed93cbe0e359a22ea57f377f6eaef9e88ac",
+        "serValue" : "5cc31721f8ba0300",
+        "amount" : 10499997.99993180,
+        "blinder" : "0cb4f90e8baea11cafdfbf5cfdfd08d59068b0a6aef11763e5b72c02e9be21f5",
+        "confirmations" : 4,
+        "spendable" : true
+    },
+    {
+        "txid" : "f4c90ef95f1bcb6820297d4158f472114987881897e12de0872a4d2d54035ba4",
+        "vout" : 0,
+        "address" : "mqZSVT6qAcJsk4NaWFoYQXtJkR5qVkKVzh",
+        "scriptPubKey" : "210383c54bac44d3e7cc20fdfda7bc9084a80ab30b1dccfd8875b8aae0431d317036ac",
+        "serValue" : "a41a000000000000",
+        "amount" : 0.00006820,
+        "blinder" : "",
+        "confirmations" : 4,
+        "spendable" : true
+    }
+]
+
+$ alice sendtoaddress $(bob getnewaddress) 3.0
+
+$ alice listunspent
+[
+    {
+        "txid" : "7475d1130a23c200b69fb2bb69b4b4933e83e6822190995ada6372427bdae69e",
+        "vout" : 0,
+        "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQYbQn1hiJFRtnUAMHJmMyTw4hn51LLwJSH",
+        "account" : "",
+        "scriptPubKey" : "76a914e0103b03d5272c5f6b599b211b05646cf41df85588ac",
+        "serValue" : "00c2eb0b00000000",
+        "amount" : 2.00000000,
+        "blinder" : "f34b06f174515ee3502040a30202f7292a462c40005788d7da1b3289e6781f4c",
+        "confirmations" : 16,
+        "spendable" : true
+    },
+    {
+        "txid" : "f1f42f19fe619d7ec93c9d0d4e91cd13078fccae2db3759d443006b86bc3c75d",
+        "vout" : 0,
+        "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQNDAAit7ZhdPQwLhTBBm73zoR2bJ93gwgc",
+        "scriptPubKey" : "76a9146e29a083d1f56ec2e0c4b3b339ba731f764c7a6188ac",
+        "serValue" : "5405360ff8ba0300",
+        "amount" : 10499994.99986260,
+        "blinder" : "e00d9c86f245c35bf8b35cd5d82dfb6f569e81d237bca0c1eb8a3d66e58636d7",
+        "confirmations" : 1,
+        "spendable" : true
+    },
+    {
+        "txid" : "f4c90ef95f1bcb6820297d4158f472114987881897e12de0872a4d2d54035ba4",
+        "vout" : 0,
+        "address" : "mqZSVT6qAcJsk4NaWFoYQXtJkR5qVkKVzh",
+        "scriptPubKey" : "210383c54bac44d3e7cc20fdfda7bc9084a80ab30b1dccfd8875b8aae0431d317036ac",
+        "serValue" : "a41a000000000000",
+        "amount" : 0.00006820,
+        "blinder" : "",
+        "confirmations" : 16,
+        "spendable" : true
+    }
+]
+
+$ bob listunspent
+[
+    {
+        "txid" : "f1f42f19fe619d7ec93c9d0d4e91cd13078fccae2db3759d443006b86bc3c75d",
+        "vout" : 1,
+        "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQQa3G5HaDaCRiqinZ6RckJAqKMdBpUW2ox",
+        "account" : "",
+        "scriptPubKey" : "76a914880cd8f57ed5757c25b545193eea1e2264eef9eb88ac",
+        "serValue" : "00a3e11100000000",
+        "amount" : 3.00000000,
+        "blinder" : "2ca75c879968ddc0b72c628725cf0d64f4790bbb267d16ddb9ff4d28d46e2c5f",
+        "confirmations" : 5,
+        "spendable" : true
+    }
+]
+
+$ alice getblockcount
+29
+$ alice getblockhash 28
+24c6bbb4cd40c34200161b630c0066c6320caf3e4eebe5fa05bf55b050cdd270
+
+$ alice getblock $(alice getblockhash 7)
+{
+    "hash" : "d7c3d3746be41409b5d66d92ebb2f660b3b31fc35080679f34855758166a05d0",
+    "confirmations" : 118,
+    "size" : 209,
+    "height" : 7,
+    "version" : 3,
+    "merkleroot" : "b8f727e6c2cebc85d9ec43016b6b24350574fa3c84805470c3bca4e609fe2c7f",
+    "tx" : [
+        "c2b608e6f5857905c217c9b0f67020d736eadf423418a06584e7d4baf18b08d2"
+    ],
+    "time" : 1434982210,
+    "nonce" : 1,
+    "bits" : "1",
+    "difficulty" : 1.00000000,
+    "chainwork" : "0000000000000000000000000000000000000000000000000000000000000008",
+    "previousblockhash" : "f3961334f379db57fce88b72ab81aab7fad29d348f47a16191a0ecfbbb217354",
+    "nextblockhash" : "7578546f8abda6d6bd8d26c27ab341f8ed05224cc86321ed8447b734620fd333"
+}
+
+$ alice getblock $(alice getblockhash 17)
+{
+    "hash" : "76ce45723dc9d5edf78292b575e03e5b7d52e49dd8f0c34b0743fc0dd3ce943a",
+    "confirmations" : 116,
+    "size" : 7130,
+    "height" : 17,
+    "version" : 3,
+    "merkleroot" : "ad6a2c29b7499a52c6ee1918b7c846d742eb1714cdba78e1e0d4d07d6b6e2da0",
+    "tx" : [
+        "b82a2d595d406e7ed38f06f5e7ef9fc585d8dd9d09b08a05e4bacac910dc011c",
+        "f1f42f19fe619d7ec93c9d0d4e91cd13078fccae2db3759d443006b86bc3c75d"
+    ],
+    "time" : 1434982310,
+    "nonce" : 1,
+    "bits" : "1",
+    "difficulty" : 1.00000000,
+    "chainwork" : "0000000000000000000000000000000000000000000000000000000000000012",
+    "previousblockhash" : "52101a002ffa67808c94b8f20a5bf1ec243949d01a2e81ae14eefdc543697c78",
+    "nextblockhash" : "c73f658f4a6733d50f6c71ce3c59ad8d96513d9ceafa41ea703ca847118d6227"
+}
+
+
+```
+
+Mon Jun 22 16:23:47 CST 2015
+```
+$ source alias.sh
+$ dcup
+$ alice getbalance
+10500000.00000000
+$ bob getbalance
+10500000.00000000
+$ alice sendtoaddress $(bob getnewaddress) 199
+d39f63bc3479ed82a9a7df11229c07e3c580f78fb72d85488288d5aafc8d6852
+$ alice getbalance
+10499800.99992923
+$ bob getbalance
+199.00000000
+$ alice setgenerate true 1
+[
+    "fcb278e5808dee69d9cd1853a353d1f87c84fa7ee03a02227aba55b7460daf49"
+]
+```
+
+
 Thu Jun 11 22:50:43 CST 2015
 
 ```
