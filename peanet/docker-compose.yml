@@ -26,3 +26,11 @@ cron:
         - Y_KEEPER_PORT=18332
         - Y_KEEPER_USER=user
         - Y_KEEPER_PASS=pass
+
+influx:
+    image: tutum/influxdb:latest
+    ports:
+        - "8083:8083"
+        - "8086:8086"
+    environment:
+        PRE_CREATE_DB: "db1;db2"
