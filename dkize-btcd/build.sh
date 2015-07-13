@@ -4,7 +4,7 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=0.10.2
+VERSION=0.11.0
 DIRBUILD=~/tmp/bitcoin
 #
 # wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.1.tar.gz | tar xvz -C ~/tmp

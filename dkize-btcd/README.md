@@ -1,3 +1,48 @@
+build bitcoin core 0.11.0
+======
+
+Mon Jul 13 08:42:43 CST 2015
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.11.0.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep bitcoind
+y12docker/bitcoind              0.11.0              8cd350257803        34 seconds ago      17.82 MB
+y12docker/bitcoind              0.10.2              7c42c250bb4a        5 weeks ago         17.57 MB
+y12docker/bitcoind              0.10.1              42b87f71220f        10 weeks ago        17.56 MB
+$ docker run y12docker/bitcoind:0.11.0 bitcoind --version
+Bitcoin Core Daemon version v0.11.0.0-gd26f951
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+
+$ docker run y12docker/bitcoind:0.11.0 bitcoin-cli --version
+Bitcoin Core RPC client version v0.11.0.0-gd26f951
+
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.0 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+aa3c13d995bff24ea0bf298a92102520d84a5687532d33bb5710ea4dc21531a9
+$ docker ps
+CONTAINER ID        IMAGE                       COMMAND                CREATED             STATUS              PORTS                              NAMES
+aa3c13d995bf        y12docker/bitcoind:0.11.0   "bitcoind -conf=/btc   19 seconds ago      Up 18 seconds       0.0.0.0:8332-8333->8332-8333/tcp   evil_lalande  
+$ docker exec aa3c13d995bf bitcoin-cli -conf=/btc/bitcoin.conf getinfo
+{
+    "version" : 110000,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 176,
+    "timeoffset" : 0,
+    "connections" : 3,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1436748592,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+```
+
+
 build bitcoin core 0.10.2
 =======
 
@@ -41,7 +86,8 @@ $ docker exec 53d683 bitcoin-cli -conf=/btc/bitcoin.conf getinfo
     "errors" : ""
 }
 
-$ docker push y12docker/bitcoind:0.10.2  The push refers to a repository [y12docker/bitcoind] (len: 1)
+$ docker push y12docker/bitcoind:0.10.2  
+The push refers to a repository [y12docker/bitcoind] (len: 1)
 Sending image list
 Pushing repository y12docker/bitcoind (1 tags)
 bc02dbdd50e8: Image successfully pushed
