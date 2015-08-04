@@ -62,7 +62,7 @@ am.service('bcSrv', function() {
 
     this.getPrikey = function(passcode) {
         value = new Buffer(passcode);
-        hash = bitcore.crypto.Hash.sha256(value);
+        hash = bitcore.crypto.Hash.sha256sha256(value);
         bn = bitcore.crypto.BN.fromBuffer(hash);
         pk = new bitcore.PrivateKey(bn);
         return pk;
