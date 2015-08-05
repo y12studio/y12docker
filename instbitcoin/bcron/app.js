@@ -6,6 +6,7 @@ var RpcClient = require('bitcoind-rpc');
 var math = require('mathjs');
 var request = require('request');
 var format = require('string-format');
+var restify = require('restify');
 var Networks = bitcore.Networks;
 
 // bitcoin/chainparams.cpp at master · bitcoin/bitcoin
@@ -46,8 +47,8 @@ var BRpc = function() {
     var userpks = [];
 
     this.buildUserAddressArray = function(){
-        math.range(2009, 2016).forEach(function(e,i,arr){
-            var passcode = 'Passcode Taichung Bitcoin UserGroup ' + e;
+        ['alice','bob','charlie'].forEach(function(e,i,arr){
+            var passcode = 'passcode taichung bitcoin taiwan 2015 ' + e;
             var pk = getPasscodePrikey(passcode);
             userpks.push(pk);
             var addr = pk.toAddress().toString();
@@ -142,6 +143,38 @@ var BRpc = function() {
     };
 };
 
+function reqBroadcast(req, res, next) {
+    console.log('[BROADCAST] ' + req.params.hex);
+    brpc.sendRawTransaction(req.params.hex, function(error, parseBuf){
+        next.ifError(error);
+        console.log(parseBuf);
+        res.send({
+            txid: parseBuf.result,
+            error: false,
+            msg: 'OK'
+        });
+        next();
+    });
+}
+
+function hello(req, res, next) {
+    res.send({
+        hello: req.params.name
+    });
+    next();
+}
+
+
+var server = restify.createServer();
+server.use(restify.bodyParser());
+server.post('/broadcast', reqBroadcast);
+//server.get('/faucet/:addr/:amount', reqFaucet);
+server.get('/hello/:name', hello);
+
+server.listen(8086, function() {
+    console.log('%s listening at %s', server.name, server.url);
+});
+
 var CronEmitter = require("cron-emitter").CronEmitter;
 
 var emitter = new CronEmitter();
@@ -157,7 +190,7 @@ setTimeout(function() {
     }
 }, 8000);
 
-emitter.add("*/7 * * * * *", "mocktx");
+emitter.add("*/5 * * * * *", "mocktx");
 
 emitter.add("*/30 * * * * *", "generateblock");
 
@@ -166,9 +199,9 @@ emitter.add("*/10 * * * * *", "checkblock");
 emitter.on("mocktx", function() {
     "use strict";
     console.log('mocktx blockcount=' + brpc.getVar().lastblockcount);
-    if (brpc.getVar().lastblockcount > 101) {
+    if (brpc.getVar().lastblockcount > 101 && math.randomInt(10) > 6) {
         //brpc.sendToLocalNewAddress(math.pickRandom([1.2, 1.5, 0.3, 0.7, 2.5, 0.6]));
-        var amount = math.pickRandom([0.1, 0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]);
+        var amount = math.pickRandom([0.1, 0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.5, 3.0]);
         var addr = math.pickRandom(brpc.getUserAddressArray());
         brpc.sendToAddress(addr,amount);
     }
