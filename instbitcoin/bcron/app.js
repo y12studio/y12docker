@@ -42,23 +42,25 @@ var BRpc = function() {
 
     var lastblockcount = 0;
 
-    var useraddrs = [];
+    var users = [];
 
-    var userpks = [];
-
-    this.buildUserAddressArray = function(){
-        ['alice','bob','charlie'].forEach(function(e,i,arr){
-            var passcode = 'passcode taichung bitcoin taiwan 2015 ' + e;
+    this.buildUserAddressArray = function() {
+        ['alice', 'bob', 'carol', 'dave', 'eve'].forEach(function(e, i, arr) {
+            var passcode = 'passcode taichung bitcoin 2015 ' + e;
             var pk = getPasscodePrikey(passcode);
-            userpks.push(pk);
             var addr = pk.toAddress().toString();
-            useraddrs.push(addr);
-            console.log("["+ passcode + "] address = " + addr);
+            users.push({
+                name: e,
+                passcode: passcode,
+                wif: pk.toWIF(),
+                address: addr
+            });
         });
+        console.log(users);
     }
 
-    this.getUserAddressArray = function() {
-        return useraddrs;
+    this.getUsersArray = function() {
+        return users;
     }
 
     this.getVar = function() {
@@ -141,11 +143,17 @@ var BRpc = function() {
             console.log(parsedBuf);
         });
     };
+
+    // sendRawTransaction
+   this.sendRawTransaction = function(hexStr, callback) {
+       console.log('rpc.sendRawTransaction:' + hexStr);
+       rpc.sendRawTransaction(hexStr, callback);
+   }
 };
 
 function reqBroadcast(req, res, next) {
     console.log('[BROADCAST] ' + req.params.hex);
-    brpc.sendRawTransaction(req.params.hex, function(error, parseBuf){
+    brpc.sendRawTransaction(req.params.hex, function(error, parseBuf) {
         next.ifError(error);
         console.log(parseBuf);
         res.send({
@@ -155,6 +163,16 @@ function reqBroadcast(req, res, next) {
         });
         next();
     });
+}
+
+function reqUsers(req, res, next) {
+    var users = brpc.getUsersArray();
+    res.send({
+        result: users,
+        error: false,
+        msg: 'OK'
+    });
+    next();
 }
 
 function hello(req, res, next) {
@@ -168,8 +186,8 @@ function hello(req, res, next) {
 var server = restify.createServer();
 server.use(restify.bodyParser());
 server.post('/broadcast', reqBroadcast);
-//server.get('/faucet/:addr/:amount', reqFaucet);
 server.get('/hello/:name', hello);
+server.get('/users', reqUsers);
 
 server.listen(8086, function() {
     console.log('%s listening at %s', server.name, server.url);
@@ -186,7 +204,7 @@ brpc.buildUserAddressArray();
 setTimeout(function() {
     // first 99 blocks
     if (brpc.getVar().lastblockcount < 10) {
-        brpc.generate(99);
+        brpc.generate(100);
     }
 }, 8000);
 
@@ -198,12 +216,13 @@ emitter.add("*/10 * * * * *", "checkblock");
 
 emitter.on("mocktx", function() {
     "use strict";
-    console.log('mocktx blockcount=' + brpc.getVar().lastblockcount);
     if (brpc.getVar().lastblockcount > 101 && math.randomInt(10) > 6) {
-        //brpc.sendToLocalNewAddress(math.pickRandom([1.2, 1.5, 0.3, 0.7, 2.5, 0.6]));
-        var amount = math.pickRandom([0.1, 0.5, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0, 2.5, 3.0]);
-        var addr = math.pickRandom(brpc.getUserAddressArray());
-        brpc.sendToAddress(addr,amount);
+        console.log('mocktx blockcount=' + brpc.getVar().lastblockcount);
+        var amount = math.pickRandom([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.2, 1.4, 1.6, 1.8, 2.0]);
+        var users = brpc.getUsersArray();
+        var user = math.pickRandom(users);
+        brpc.sendToAddress(user.address, amount);
+        console.log('send ' + user.name + ' amount ' + amount);
     }
 });
 

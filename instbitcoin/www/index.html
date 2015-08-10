@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <meta name="viewport" content="initial-scale=1" />
@@ -37,8 +37,17 @@
 
         <md-content layout="column" flex class="md-padding">
             <section layout="row" layout-sm="column" layout-align="center center">
-                <md-button class="md-primary" ng-href="/abe/" target="_blank">BlockChain Browser(Abe)</md-button>
+                <md-button class="md-primary" ng-href="/abe/" target="_blank">BlockChain</md-button>
+                <span ng-repeat="item in users">
+                    <md-button class="md-primary" ng-click="ckPickUser(item)">{{item.name}}</md-button>
+                </span>
             </section>
+            <div ng-hide="user == null">
+            <h3>User</h3>
+                {{user.name}}/{{user.address}}
+                <md-button class="md-primary" ng-href="/abe/address/{{user.address}}" target="_blank">blockchain</md-button>
+                <md-button class="md-primary" ng-click="getUnspent(user.address)">UTXOs</md-button>
+            </div>
             <h3>Step 1</h3>
             <form name="projectForm">
                 <md-input-container>
@@ -52,18 +61,10 @@
             </form>
             <section layout="row" layout-sm="column" layout-align="center center">
                 <md-button class="md-raised" ng-click="getRanPasscode()">Random Passcode</md-button>
-            </section>
-            <h3>Step 2</h3>
-            <section layout="row" layout-sm="column" layout-align="center center">
                 <md-button class="md-raised" ng-click="getAddress()">Get Address</md-button>
             </section>
             <h4>
                 <span style="margin-right:2em;color:#acacac">ADDRRESS:</span>{{addr}}</h4>
-            <section layout="row" layout-sm="column" layout-align="center center">
-                <md-button class="md-primary" ng-href="/abe/address/{{addr}}" target="_blank">Abe Browser</md-button>
-                <md-button class="md-primary" ng-href="/fc/faucet/{{addr}}/1.68" target="_blank">Faucet 1.68</md-button>
-                <md-button class="md-raised" ng-click="getUnspent()">UTXOs</md-button>
-            </section>
             <div layout="row" ng-repeat="item in utxos">
                 <div>
                     <md-checkbox ng-checked="exists(item, selected)" ng-click="toggle(item, selected)">
@@ -90,21 +91,22 @@
             </form>
             <h3>Step 3</h3>
             <section layout="row" layout-sm="column" layout-align="center center">
-                <md-button class="md-raised" ng-click="txSign()">TxSign</md-button>
+                <md-button class="md-raised" ng-click="txSign(user.wif)">TxSign</md-button>
                 <md-button class="md-raised" ng-click="broadcast()">Broadcast</md-button>
             </section>
             <h2 class="md-title">TxSign</h2>
             <code style="display: block; padding: 8px;">{{txSignResult}}</code>
         </md-content>
     </div>
-    <script src="js/bitcore/0.12.7/bitcore.min.js"></script>
+    <script src="http://0.y12.tw/js/bitcore/0.12.15/bitcore.min.js"></script>
     <!-- Angular Material Dependencies -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-messages.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-animate.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-aria.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.js"></script>
     <script src="app.js"></script>
 </body>
 

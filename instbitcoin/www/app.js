@@ -1,6 +1,6 @@
 var LOCALTEST = false;
 
-var am = angular.module('MyApp', ['ngMaterial', 'ngMessages']);
+var am = angular.module('MyApp', ['ngMaterial', 'ngMessages', 'ngResource']);
 am.service('dataSrv', function() {
     // abe json output 'http://192.168.2.73/abe/unspent/addrxxxxxx?format=json'
     this.devitems = [{
@@ -73,9 +73,8 @@ am.service('bcSrv', function() {
         return pk.toAddress();
     }
 
-    this.signTx = function(passcode, utxosRaw, toAddress, amount, chAddress) {
-        var pk = this.getPrikey(passcode);
-
+    this.signTx = function(wif, utxosRaw, toAddress, amount, chAddress) {
+        var pk = bitcore.PrivateKey.fromWIF(wif);
         var utxos = utxosRaw.map(function(obj) {
             return new UnspentOutput(obj);
         });
@@ -99,12 +98,22 @@ am.service('bcSrv', function() {
 });
 
 
-am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
+am.controller('AppCtrl', function($scope, $resource, $http, dataSrv, bcSrv) {
+
+    var bapiUsers = $resource('/bapi/users');
+    bapiUsers.get(function(r) {
+        console.log(r);
+        $scope.users = r.result;
+    });
 
     $scope.project = {
         passcode: 'Red TaiChung MayDay',
         rate: 500
     };
+
+    $scope.ckPickUser = function(user){
+        $scope.user = user;
+    }
 
     $scope.getRanPasscode = function() {
         var ranNum = Math.floor((Math.random() * 100000) + 1);
@@ -136,13 +145,12 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
         return list.indexOf(item) > -1;
     };
 
-    $scope.txSign = function() {
-        pcode = $scope.project.passcode;
+    $scope.txSign = function(wif) {
         toAddr = $scope.sendto.address;
         toAmount = $scope.sendto.amount;
         chAddr = $scope.addr;
         utxosRaw = $scope.calcResult.utxos;
-        rawtx = bcSrv.signTx(pcode, utxosRaw, toAddr, toAmount, chAddr);
+        rawtx = bcSrv.signTx(wif, utxosRaw, toAddr, toAmount, chAddr);
         $scope.txSignResult = rawtx;
     }
 
@@ -172,17 +180,17 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
     };
 
 
-    $scope.getUnspent = function() {
+    $scope.getUnspent = function(addr) {
+        $scope.calcResult = {};
         if (LOCALTEST) {
             $scope.utxos = dataSrv.devitems;
             return;
         }
-
-        //var unspenturl = 'http://192.168.2.73/abe/unspent/' + $scope.addr + '?format=json';
-        var unspenturl = '/abe/unspent/' + $scope.addr + '?format=json';
+        //var unspenturl = '/abe/unspent/' + $scope.addr + '?format=json';
+        var unspenturl = '/abe/unspent/' + addr + '?format=json';
         $http.get(unspenturl).
         success(function(data, status, headers, config) {
-            //console.log(data);
+            console.log(data);
             $scope.utxos = data['unspent_outputs'];
         }).
         error(function(data, status, headers, config) {
@@ -193,10 +201,8 @@ am.controller('AppCtrl', function($scope, $http, dataSrv, bcSrv) {
 
 
     $scope.broadcast = function() {
-
         hexstr = $scope.txSignResult;
-        // api /fc/broadcast;
-        var turl = '/fc/broadcast';
+        var turl = '/bapi/broadcast';
         $http.post(turl, {
             hex: hexstr
         }).

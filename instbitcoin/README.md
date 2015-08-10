@@ -5,10 +5,26 @@ $ docker run y12docker/instbitcoin:0.11.0.a bitcoind --version
 Bitcoin Core Daemon version v0.11.0.0-gd26f951
 
 $ docker run -p 80:8080 y12docker/instbitcoin:0.11.0.a
-
-[passcode taichung bitcoin taiwan alice] address = mjTSzbt1xPNa5J73XZHyrBpoe7G6beG5F6
-[passcode taichung bitcoin taiwan bob] address = mnkErHL6vpxAqzmeBguNxeGeF5NS33vY4t
-[passcode taichung bitcoin taiwan charlie] address = mqW91m89sWBo35z94Sg5RtPBgkssgL3pDd
+[ { name: 'alice',
+    passcode: 'passcode taichung bitcoin 2015 alice',
+    wif: 'cVG8qWpmp9Eg3iNhesdMuHCSQ3EtgaBQwD7UDxG18gcYhWTPNXrP',
+    address: 'mvhs893NaYf8bu7btybhEvzyVJ4tSUgQPV' },
+  { name: 'bob',
+    passcode: 'passcode taichung bitcoin 2015 bob',
+    wif: 'cMmHKEMgMJXaqd7KbWK7woAEpHq92Fx8AFPnPbeRxDkk9KD6smF4',
+    address: 'mz6km2YGPmjaPdg4iYD129661B2q7bcn5q' },
+  { name: 'carol',
+    passcode: 'passcode taichung bitcoin 2015 carol',
+    wif: 'cRxhe8AzUMja2VdCBCCmbagS5HdAJLD4oqJZP1HXr991Anq3AXUd',
+    address: 'mtYJ5CeVJKU429PxKEd1MXeutDG1LrXBhd' },
+  { name: 'dave',
+    passcode: 'passcode taichung bitcoin 2015 dave',
+    wif: 'cVtiwAEGgZgfC5b4GXyC5FoELs1fFjfQxuoGs5tgDVWnMLYn8E6q',
+    address: 'mqzMNgQSXeTEsZCxT9hT5u73qnBCTmwunx' },
+  { name: 'eve',
+    passcode: 'passcode taichung bitcoin 2015 eve',
+    wif: 'cN2sjx1UXoE6yw7o119yqak399gksYqiGn3Tfr7FRgb7hoZB3dNb',
+    address: 'mscSQJkYKCRCcBeKzHan1qVH1CLkFewR8z' } ]
 
 $ docker push y12docker/instbitcoin:0.11.0.a
 ```
