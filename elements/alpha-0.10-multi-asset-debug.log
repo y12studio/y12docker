@@ -1,0 +1,48 @@
+2015-08-17 08:08:13 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2015-08-17 08:08:13 Bitcoin version v0.10.2.0-d3b5516 (2015-07-17 21:26:42 +0200)
+2015-08-17 08:08:13 Using OpenSSL version OpenSSL 1.0.1f 6 Jan 2014
+2015-08-17 08:08:13 Default data directory /home/lin/.bitcoin
+2015-08-17 08:08:13 Using data directory /home/lin/git/y12docker/elements/./alphatestnet3
+2015-08-17 08:08:13 Using config file /home/lin/git/y12docker/elements/./bitcoin.conf
+2015-08-17 08:08:13 Using at most 125 connections (1024 file descriptors available)
+2015-08-17 08:08:13 Using 4 threads for script verification
+2015-08-17 08:08:13 Binding RPC on address ::1 port 4241 (IPv4+IPv6 bind any: 0)
+2015-08-17 08:08:13 Binding RPC on address 127.0.0.1 port 4241 (IPv4+IPv6 bind any: 0)
+2015-08-17 08:08:13 Bound to [::]:4242
+2015-08-17 08:08:13 Bound to 0.0.0.0:4242
+2015-08-17 08:08:13 init message: Loading block index...
+2015-08-17 08:08:13 Opening LevelDB in /home/lin/git/y12docker/elements/./alphatestnet3/blocks/index
+2015-08-17 08:08:13 Opened LevelDB successfully
+2015-08-17 08:08:13 Opening LevelDB in /home/lin/git/y12docker/elements/./alphatestnet3/chainstate
+2015-08-17 08:08:13 Opened LevelDB successfully
+2015-08-17 08:08:13 LoadBlockIndexDB: last block file = 0
+2015-08-17 08:08:13 LoadBlockIndexDB: last block file info: CBlockFileInfo(blocks=0, size=0, heights=0...0, time=1970-01-01...1970-01-01)
+2015-08-17 08:08:13 Checking all blk files are present...
+2015-08-17 08:08:13 LoadBlockIndexDB(): transaction index disabled
+2015-08-17 08:08:13 Initializing databases...
+2015-08-17 08:08:13 Pre-allocating up to position 0x1000000 in blk00000.dat
+2015-08-17 08:08:13 init message: Verifying blocks...
+2015-08-17 08:08:13  block index              26ms
+2015-08-17 08:08:13 No wallet compiled in!
+2015-08-17 08:08:13 ERROR: CheckTransaction: vTxFees bigger than vout
+2015-08-17 08:08:13 ERROR: CheckBlock() : CheckTransaction failed
+2015-08-17 08:08:13 InvalidChainFound: invalid block=ad5cb13bc360f0cbc4ba3dca881e6a771d05052469edb73e54956b5225918846  height=0  log2_work=0  date=2011-02-02 23:16:42

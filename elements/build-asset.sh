@@ -4,11 +4,11 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=v150817
+VERSION=v150818asset
 DIRBUILD=~/tmp/elements
 cd ${DIRBUILD}
 ./autogen.sh
-CONFIGFLAGS="--disable-tests --without-gui --enable-upnp-default --disable-ccache --disable-maintainer-mode --disable-dependency-tracking"
+CONFIGFLAGS="--disable-wallet --without-gui --disable-tests"
 ./configure --prefix=${SCRIPTPATH} --with-incompatible-bdb ${CONFIGFLAGS}
 make -j4
 make install-strip
