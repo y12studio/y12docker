@@ -3,8 +3,10 @@
 set -e
 set -x
 
+DOCKERIMG=y12docker/elements-alpha
+VERSION=v150824asset
+
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=v150818asset
 DIRBUILD=~/tmp/elements
 cd ${DIRBUILD}
 ./autogen.sh
@@ -16,7 +18,7 @@ make install-strip
 # larsks/dockerize https://github.com/larsks/dockerize
 #
 cd ${SCRIPTPATH}
-dockerize -t y12docker/elements-alpha:${VERSION} -a bin/alphad /usr/bin/alphad \
+dockerize -t ${DOCKERIMG}:${VERSION} -a bin/alphad /usr/bin/alphad \
     -a bin/alpha-cli /usr/bin/alpha-cli \
     -a bin/alpha-tx /usr/bin/alpha-tx \
     -a bitcoin.conf /btc/bitcoin.conf \

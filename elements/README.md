@@ -1,6 +1,69 @@
 Build [ElementsProject/elements](https://github.com/ElementsProject/elements)
 =====
 
+Mon Aug 24 15:10:18 CST 2015
+
+rebuild alpha-0.10-multi-asset
+
+```
+$ git clone --depth 1 --branch alpha-0.10-multi-asset --single-branch https://github.com/ElementsProject/elements ~/tmp/elements
+$ ./build-asset.sh
+$ docker images | grep elements
+y12docker/elements-alpha        v150824asset        7f4c252b59cb        7 minutes ago       15.67 MB
+$ docker run -d y12docker/elements-alpha:v150817 alphad -regtest -testnet=0 \
+  -rpcconnect=127.0.0.1 -rpcconnectport=18332 -tracksidechain=all -txindex -blindtrust=true \
+  -conf=/btc/bitcoin.conf  -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                              COMMAND
+  8e5c2308284f        y12docker/elements-alpha:v150817   "alphad -regtest -tes"
+$ alias ela='docker exec 8e5c2308284f alpha-cli -conf=/btc/bitcoin.conf'
+$ ela --version
+Elements Alpha RPC client version v0.10.2.0-601116f
+$ ela getinfo
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 0,
+    "timeoffset" : 0,
+    "connections" : 0,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1440401196,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
+
+$ ela setgenerate true 10
+$ ela getinfo
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 10500000.00000000,
+    "blocks" : 11,
+    "timeoffset" : 0,
+    "connections" : 0,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1440401196,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
+$ ela getnewaddress
+22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQJZEsThqA3oM1ff2SeK7Fh6mfupynBeGfr
+$ ela sendtoaddress 22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQJZEsThqA3oM1ff2SeK7Fh6mfupynBeGfr 10.05
+e067ec45676e6092f913e2f08dd0dba6a8d5956b2857e7454b67accc5f8b7452
+$ ela getrawtransaction e067ec45676e6092f913e2f08dd0dba6a8d5956b2857e7454b67accc5f8b7452 1 > e067ec.json
+```
+
 Mon Aug 17 15:13:51 CST 2015
 
 build multi-asset-0.11
