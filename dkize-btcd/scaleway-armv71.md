@@ -133,4 +133,30 @@ y12docker/bitcoind   0.11.0.arm          5e35fbc0adfd        15 seconds ago     
 Bitcoin Core Daemon version v0.11.0.0-gd26f951
 Copyright (C) 2009-2015 The Bitcoin Core Developers
 
+# docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.0.arm bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+ebbf2fecafd645d77a8e3ebefadbaf0cf9cb8ba97c2b3ffaafe6121843d33f83
+# docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
+ebbf2fecafd6        y12docker/bitcoind:0.11.0.arm   "bitcoind -conf=/btc/"   5 seconds ago       Up 3 seconds        0.0.0.0:8332-8333->8332-8333/tcp   admiring_mestorf
+# alias bci='docker exec ebbf2fecafd6 bitcoin-cli -conf=/btc/bitcoin.conf'
+# bci getinfo
+{
+    "version" : 110000,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 161568,
+    "timeoffset" : 0,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 1250757.73927466,
+    "testnet" : false,
+    "keypoololdest" : 1441261480,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+# bci getnewaddress
+1L7NeymjAxCGVrQTEx64Vhup7JFTszwycL
 ```
