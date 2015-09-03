@@ -56,4 +56,12 @@ Tutorials & Technicalities: Compile Bitcoin Core on Raspberry Pi (Raspbian)
 # ./autogen.sh
 # ./configure --without-gui CPPFLAGS="-I/usr/local/BerkeleyDB.4.8/include -O2" LDFLAGS="-L/usr/local/BerkeleyDB.4.8/lib"
 # make -j4
+virtual memory exhausted: Cannot allocate memory
+virtual memory exhausted: Cannot allocate memory
+Makefile:3612: recipe for target 'libbitcoin_server_a-net.o' failed
+make[2]: *** [libbitcoin_server_a-net.o] Error 1
+make[2]: *** Waiting for unfinished jobs....
+Makefile:3570: recipe for target 'libbitcoin_server_a-main.o' failed
+make[2]: *** [libbitcoin_server_a-main.o] Error 1
+
 ```
