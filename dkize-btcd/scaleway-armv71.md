@@ -63,5 +63,74 @@ make[2]: *** [libbitcoin_server_a-net.o] Error 1
 make[2]: *** Waiting for unfinished jobs....
 Makefile:3570: recipe for target 'libbitcoin_server_a-main.o' failed
 make[2]: *** [libbitcoin_server_a-main.o] Error 1
+# free -h
+             total       used       free     shared    buffers     cached
+Mem:          2.0G        86M       1.9G        12M       2.7M        44M
+-/+ buffers/cache:        39M       1.9G
+Swap:           0B         0B         0B
+# swapon -s
+# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+none           1010M     0 1010M   0% /dev
+tmpfs           203M   13M  190M   7% /run
+/dev/nbd0        46G  1.3G   43G   3% /
+tmpfs          1012M     0 1012M   0% /dev/shm
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs          1012M     0 1012M   0% /sys/fs/cgroup
+cgmfs           100K     0  100K   0% /run/cgmanager/fs
+tmpfs           203M     0  203M   0% /run/user/0
+# fallocate -l 4G /swapfile
+# ls -lh /swapfile
+-rw-r--r-- 1 root root 4.0G Sep  3 05:30 /swapfile
+# chmod 600 /swapfile
+# mkswap /swapfile
+Setting up swapspace version 1, size = 4194300 KiB
+no label, UUID=c233fe11-465e-4555-b957-5ef6d8f4afa9
+# swapon /swapfile
+# swapon -s
+Filename                                Type            Size    Used    Priority
+/swapfile                               file            4194300 0       -1
+# free -h
+             total       used       free     shared    buffers     cached
+Mem:          2.0G        92M       1.9G        12M       3.5M        46M
+-/+ buffers/cache:        42M       1.9G
+Swap:         4.0G         0B       4.0G
+# ./configure --without-gui --disable-tests CPPFLAGS="-I/usr/local/BerkeleyDB.4.8/include -O2" LDFLAGS="-L/usr/local/BerkeleyDB.4.8/lib"
+# make -j4
+# make install-strip
+# which bitcoind
+/usr/local/bin/bitcoind
+# bitcoind --version
+Bitcoin Core Daemon version v0.11.0.0-gd26f951
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+```
+
+install larsks/dockerize 
+ https://github.com/larsks/dockerize
+
+```
+# git clone https://github.com/larsks/dockerize ~/bin/dockerizeCloning into '/root/bin/dockerize'...
+# cd ~/bin/dockerize/
+# apt-get install python-dev
+# python setup.py install
+# dockerize --version
+dockerize version 0.2
+# cd ~/bin/bitcoin-0.11.0/
+# cat bitcoin.conf
+rpcuser=user
+rpcpassword=pass
+# dockerize -t y12docker/bitcoind:0.11.0.arm -a /usr/local/bin/bitcoind /usr/bin/bitcoind \
+    -a /usr/local/bin/bitcoin-cli /usr/bin/bitcoin-cli \
+    -a /usr/local/bin/bitcoin-tx /usr/bin/bitcoin-tx \
+    -a bitcoin.conf /btc/bitcoin.conf \
+    -a README.md /btc/data/README.md \
+    -a /bin/bash /bin/bash \
+    -a /bin/echo /bin/echo \
+    -c /bin/bash --filetools
+# docker images | grep bitcoind
+y12docker/bitcoind   0.11.0.arm          5e35fbc0adfd        15 seconds ago      12.04 MB
+# docker run y12docker/bitcoind:0.11.0.arm bitcoind --version
+Bitcoin Core Daemon version v0.11.0.0-gd26f951
+Copyright (C) 2009-2015 The Bitcoin Core Developers
 
 ```
