@@ -109,7 +109,7 @@ install larsks/dockerize
  https://github.com/larsks/dockerize
 
 ```
-# git clone https://github.com/larsks/dockerize ~/bin/dockerizeCloning into '/root/bin/dockerize'...
+# git clone https://github.com/larsks/dockerize ~/bin/dockerize
 # cd ~/bin/dockerize/
 # apt-get install python-dev
 # python setup.py install
