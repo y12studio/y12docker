@@ -160,3 +160,101 @@ ebbf2fecafd6        y12docker/bitcoind:0.11.0.arm   "bitcoind -conf=/btc/"   5 s
 # bci getnewaddress
 1L7NeymjAxCGVrQTEx64Vhup7JFTszwycL
 ```
+
+ 
+build the Bitcoin XT 0.11.0 and y12docker/bitcoind:0.11.0.xtarm
+
+https://github.com/bitcoinxt/bitcoinxt/releases
+
+```
+# wget -qO- https://github.com/bitcoinxt/bitcoinxt/archive/v0.11A.tar.gz | tar xvz -C ~/bin
+#  cd ~/bin/bitcoinxt-0.11A/
+# ./autogen.sh
+# apt-get install libcurl4-openssl-dev
+# ./configure --without-gui --disable-tests CPPFLAGS="-I/usr/local/BerkeleyDB.4.8/include -O2" LDFLAGS="-L/usr/local/BerkeleyDB.4.8/lib"
+# make -j4
+# make install-strip
+# bitcoind --version
+Bitcoin XT Daemon version v0.11.0.0-g2b918be
+Copyright (C) 2009-2015 The Bitcoin XT Developers
+# cd ~/bin/bitcoinxt-0.11A/
+# cat bitcoin.conf
+rpcuser=user
+rpcpassword=pass
+# dockerize -t y12docker/bitcoind:0.11.0.xtarm -a /usr/local/bin/bitcoind /usr/bin/bitcoind \
+    -a /usr/local/bin/bitcoin-cli /usr/bin/bitcoin-cli \
+    -a /usr/local/bin/bitcoin-tx /usr/bin/bitcoin-tx \
+    -a bitcoin.conf /btc/bitcoin.conf \
+    -a README.md /btc/data/README.md \
+    -a /bin/bash /bin/bash \
+    -a /bin/echo /bin/echo \
+    -c /bin/bash --filetools
+# docker images | grep bitcoind
+y12docker/bitcoind   0.11.0.xtarm        56fb8c8aaa19        36 seconds ago      18.1 MB
+y12docker/bitcoind   0.11.0.arm          5e35fbc0adfd        3 hours ago         12.04 MB
+y12docker/bitcoind   0.11.0              8cd350257803        7 weeks ago         17.82 MB
+# docker run y12docker/bitcoind:0.11.0.xtarm bitcoind --version
+Bitcoin XT Daemon version v0.11.0.0-g2b918be
+Copyright (C) 2009-2015 The Bitcoin XT Developers
+
+# docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.0.xtarm bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+e42d4f896793ec095fe1b4a1a5c1f40469db274374130883e2dc4c86b47b5839
+# docker ps
+CONTAINER ID        IMAGE                             COMMAND                  CREATED             STATUS              PORTS                              NAMES
+e42d4f896793        y12docker/bitcoind:0.11.0.xtarm   "bitcoind -conf=/btc/"   14 seconds ago      Up 13 seconds       0.0.0.0:8332-8333->8332-8333/tcp   pensive_banach
+# alias xtci='docker exec e42d4f896793 bitcoin-cli -conf=/btc/bitcoin.conf'
+# xtci getinfo
+{
+    "version" : 110000,
+    "protocolversion" : 70010,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 172359,
+    "timeoffset" : -1,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 1498294.36281651,
+    "testnet" : false,
+    "keypoololdest" : 1441273010,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+
+# xtci getnetworkinfo
+{
+    "version" : 110000,
+    "subversion" : "/Bitcoin XT:0.11.0/",
+    "protocolversion" : 70010,
+    "localservices" : "0000000000000003",
+    "timeoffset" : -1,
+    "connections" : 8,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00001000,
+    "localaddresses" : [
+    ]
+}
+```
