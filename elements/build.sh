@@ -4,7 +4,7 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=v150817
+VERSION=v150907
 DIRBUILD=~/tmp/elements
 cd ${DIRBUILD}
 ./autogen.sh

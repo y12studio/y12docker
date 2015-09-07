@@ -1,5 +1,21 @@
 Build [ElementsProject/elements](https://github.com/ElementsProject/elements)
 =====
+Mon Sep  7 18:40:45 CST 2015
+
+build y12docker/elements-alpha:v150907
+
+```
+$ rm -rf ~/tmp/elements
+$ git clone --depth 1 --branch alpha --single-branch https://github.com/ElementsProject/elements ~/tmp/elements
+$ ./build.sh
+$ docker images | grep elements
+y12docker/elements-alpha        v150907             ef5f4174fc6c        5 minutes ago       18.42 MB
+$ docker run y12docker/elements-alpha:v150907 alphad --version
+Elements Alpha Daemon version v0.10.2.0-538c0f6
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+$ docker push y12docker/elements-alpha:v150907
+
+```
 
 Mon Aug 24 15:10:18 CST 2015
 
