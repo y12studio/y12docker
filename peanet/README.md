@@ -1,8 +1,104 @@
-log
+y12docker/elements-alpha:v150907 testlog
 ------
+Mon Sep  7 19:05:52 CST 2015
 
-[tutumcloud/influxdb](https://github.com/tutumcloud/influxdb)
+```
+$ source alias.sh
+$ dcup
+$ alice getinfo
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 10499999.99993180,
+    "blocks" : 1,
+    "timeoffset" : 0,
+    "connections" : 1,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1441624706,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
 
+$ bob getinfo
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 3,
+    "timeoffset" : 0,
+    "connections" : 2,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1441624707,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
+
+$ carol getinfo
+
+{
+    "version" : 100200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 6,
+    "timeoffset" : 0,
+    "connections" : 1,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1441624707,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : "This is a pre-release test build - use at your own risk - do not use for mining or merchant applications"
+}
+
+$ alice sendtoaddress $(bob getnewaddress) 100.99
+af620709d174bf1be0e1ccd54dd138a968b80eed0db85c30d375c368e9116546
+
+$ alice getbalance
+10499899.01000000
+$ bob getbalance
+100.99000000
+
+$ bob gettransaction af620709d174bf1be0e1ccd54dd138a968b80eed0db85c30d375c368e9116546
+{
+    "amount" : 100.99000000,
+    "confirmations" : 11,
+    "blockhash" : "f1177bfb7f3e9df726b060a54d6af9b01a60c70cf814259d199debd68b0a26f2",
+    "blockindex" : 1,
+    "blocktime" : 1441624850,
+    "txid" : "af620709d174bf1be0e1ccd54dd138a968b80eed0db85c30d375c368e9116546",
+    "walletconflicts" : [
+    ],
+    "time" : 1441624846,
+    "timereceived" : 1441624846,
+    "details" : [
+        {
+            "account" : "",
+            "address" : "22E8QKHaTijFemPDwKvAk9qoTgagPfp8nBQiry87MMU1h2gQYgULbKC44mRHLvrUvtGPAzcn58r9rJiBp",
+            "category" : "receive",
+            "amount" : 100.99000000,
+            "vout" : 0
+        }
+    ],
+    "hex" : "01000000014a53226.."
+}
+
+$ carol gettransaction af620709d174bf1be0e1ccd54dd138a968b80eed0db85c30d375c368e9116546
+error: {"code":-5,"message":"Invalid or non-wallet transaction id"}
+$ carol getrawtransaction af620709d174bf1be0e1ccd54dd138a968b80eed0db85c30d375c368e9116546 1 > carol-getrawtx.log
+```
 
 
 Mon Jun 22 22:09:09 CST 2015
