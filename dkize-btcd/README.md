@@ -1,5 +1,60 @@
-build bitcoin core 0.11.0
+build bitcoin core/xt 0.11.0
 ======
+
+Wed Sep  9 15:22:12 CST 2015
+
+docker image y12docker/bitcoind:0.11.0b.xt
+
+```
+$ git clone --depth 1 --branch 0.11B --single-branch https://github.com/bitcoinxt/bitcoinxt ~/tmp/bitcoinxt-0.11B
+$ ./build.sh
+$ docker images | grep xt
+y12docker/bitcoind              0.11.0b.xt          0be7d91a0d97        About a minute ago   25.59 MB
+$ docker run y12docker/bitcoind:0.11.0b.xt bitcoind --version
+Bitcoin XT Daemon version v0.11.0B-61c295e
+Copyright (C) 2009-2015 The Bitcoin XT Developers
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.0b.xt bitcoind -stealth-mode -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
+d0453631cfd7        y12docker/bitcoind:0.11.0b.xt   "bitcoind -stealth-mo"   7 seconds ago       Up 6 seconds        0.0.0.0:8332-8333->8332-8333/tcp   sharp_torvalds
+$ alias xtc='docker exec d0453631cfd7 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ xtc getnetworkinfo
+{
+    "version" : 110000,
+    "subversion" : "/Bitcoin XT:0.11.0/",
+    "protocolversion" : 70010,
+    "localservices" : "0000000000000003",
+    "timeoffset" : -1,
+    "connections" : 8,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00001000,
+    "localaddresses" : [
+    ]
+}
+
+```
 
 Mon Jul 13 08:42:43 CST 2015
 
