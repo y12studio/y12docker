@@ -1,0 +1,26 @@
+alice:
+    image: y12docker/bitcoind:0.11.0
+    command: >
+        bitcoind -regtest -txindex -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
+
+bob:
+    image: y12docker/bitcoind:0.11.0
+    links:
+        - alice
+    command: >
+        bitcoind -regtest -txindex -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
+        -addnode=alice:18333
+
+carol:
+    image: y12docker/bitcoind:0.11.0
+    links:
+        - alice
+    command: >
+        bitcoind -regtest -txindex -port=18333
+        -conf=/btc/bitcoin.conf -datadir=/btc/data
+        -rpcallowip=172.17.0.0/16 -rpcport=18332
+        -addnode=alice:18333
