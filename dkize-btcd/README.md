@@ -1,6 +1,95 @@
 build bitcoin core/xt 0.11.0
 ======
 
+docker image y12docker/bitcoind:0.11c.xt
+
+[Release 0.11C · bitcoinxt/bitcoinxt](https://github.com/bitcoinxt/bitcoinxt/releases/tag/v0.11C)
+
+```
+$ git clone --depth 1 --branch 0.11C --single-branch https://github.com/bitcoinxt/bitcoinxt ~/tmp/bitcoinxt-0.11C
+$ ./build.sh
+$ docker images | grep xt
+y12docker/bitcoind              0.11c.xt            441a32d10432        25 seconds ago      25.59 MB
+$ docker version
+Client:
+ Version:      1.8.3
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   f4bf5c7
+ Built:        Mon Oct 12 05:37:18 UTC 2015
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      1.8.3
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   f4bf5c7
+ Built:        Mon Oct 12 05:37:18 UTC 2015
+ OS/Arch:      linux/amd64
+$ docker run y12docker/bitcoind:0.11c.xt bitcoind --version
+Bitcoin XT Daemon version v0.11.0C-f725006
+Copyright (C) 2009-2015 The Bitcoin XT Developers
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11c.xt bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                         COMMAND                  CREATED             STATUS              PORTS                              NAMES
+119c024f1707        y12docker/bitcoind:0.11c.xt   "bitcoind -conf=/btc/"   7 seconds ago       Up 6 seconds        0.0.0.0:8332-8333->8332-8333/tcp   dreamy_ritchie
+$ alias xtc='docker exec 119c024f1707 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ xtc getnetworkinfo
+{
+    "version" : 110000,
+    "subversion" : "/Bitcoin XT:0.11.0/",
+    "protocolversion" : 70010,
+    "localservices" : "0000000000000003",
+    "timeoffset" : 0,
+    "connections" : 8,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00001000,
+    "localaddresses" : [
+    ]
+}
+$ xtc getinfo
+{
+    "version" : 110000,
+    "protocolversion" : 70010,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 1472,
+    "timeoffset" : 0,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1444699701,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00001000,
+    "errors" : ""
+}
+$ docker push y12docker/bitcoind:0.11c.xt
+```
+
 Wed Sep  9 15:22:12 CST 2015
 
 docker image y12docker/bitcoind:0.11.0b.xt

@@ -4,8 +4,8 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=bitcoinxt-0.11B
-DKTAG=0.11.0b.xt
+VERSION=bitcoinxt-0.11C
+DKTAG=0.11c.xt
 DIRBUILD=~/tmp/bitcoin
 #
 # wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.1.tar.gz | tar xvz -C ~/tmp
@@ -15,7 +15,7 @@ rm -rf ${DIRBUILD}
 cp -r ~/tmp/${VERSION} ${DIRBUILD}
 cd ${DIRBUILD}
 ./autogen.sh
-CONFIGFLAGS="-disable-tests --without-gui --enable-upnp-default --disable-ccache --disable-maintainer-mode --disable-dependency-tracking"
+CONFIGFLAGS="-disable-tests --without-gui --disable-ccache --disable-maintainer-mode --disable-dependency-tracking"
 ./configure --prefix=${SCRIPTPATH} --with-incompatible-bdb ${CONFIGFLAGS}
 make -j4
 make install-strip
