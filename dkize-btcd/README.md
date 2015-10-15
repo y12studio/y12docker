@@ -1,6 +1,77 @@
 build bitcoin core/xt 0.11.0
 ======
 
+docker image y12docker/bitcoind:0.11.1.core
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.11.1.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep core
+y12docker/bitcoind              0.11.1.core         c4de30f5f8f1        23 seconds ago      17.83 MB
+$ docker run y12docker/bitcoind:0.11.1.core bitcoind --version
+Bitcoin Core Daemon version v0.11.1.0-gcf33f19
+Copyright (C) 2009-2015 The Bitcoin Core Developers
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.1.core bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+bbc67af64a7e        y12docker/bitcoind:0.11.1.core   "bitcoind -conf=/btc/"   5 seconds ago       Up 4 seconds        0.0.0.0:8332-8333->8332-8333/tcp   thirsty_stallman
+$ alias bc='docker exec bbc67af64a7e bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getnetworkinfo
+{
+    "version" : 110100,
+    "subversion" : "/Satoshi:0.11.1/",
+    "protocolversion" : 70002,
+    "localservices" : "0000000000000001",
+    "timeoffset" : 0,
+    "connections" : 5,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00005000,
+    "localaddresses" : [
+    ]
+}
+$ bc getinfo
+{
+    "version" : 110100,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 256,
+    "timeoffset" : 0,
+    "connections" : 7,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1444917821,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00005000,
+    "errors" : ""
+}
+$ docker stop bbc67af64a7e
+$ docker push y12docker/bitcoind:0.11.1.core
+```
+
 docker image y12docker/bitcoind:0.11c.xt
 
 [Release 0.11C · bitcoinxt/bitcoinxt](https://github.com/bitcoinxt/bitcoinxt/releases/tag/v0.11C)

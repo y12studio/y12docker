@@ -4,11 +4,13 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-VERSION=bitcoinxt-0.11C
-DKTAG=0.11c.xt
+#VERSION=bitcoinxt-0.11C
+VERSION=bitcoin-0.11.1
+#DKTAG=0.11c.xt
+DKTAG=0.11.1.core
 DIRBUILD=~/tmp/bitcoin
 #
-# wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.10.1.tar.gz | tar xvz -C ~/tmp
+# wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.11.1.tar.gz | tar xvz -C ~/tmp
 # git clone --depth 1 --branch 0.11B --single-branch https://github.com/bitcoinxt/bitcoinxt ~/tmp/bitcoinxt-0.11B
 #
 rm -rf ${DIRBUILD}
