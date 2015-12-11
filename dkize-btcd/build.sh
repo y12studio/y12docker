@@ -4,10 +4,10 @@ set -e
 set -x
 
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
-#VERSION=bitcoinxt-0.11C
-VERSION=bitcoin-0.11.1
-#DKTAG=0.11c.xt
-DKTAG=0.11.1.core
+VERSION=bitcoinxt-0.11D
+#VERSION=bitcoin-0.11.2
+DKTAG=0.11d.xt
+# DKTAG=0.11.2.core
 DIRBUILD=~/tmp/bitcoin
 #
 # wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.11.1.tar.gz | tar xvz -C ~/tmp
