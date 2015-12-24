@@ -1,5 +1,141 @@
-build bitcoin core/xt 0.11.0
+build bitcoin core/xt/bu
 ======
+
+docker image y12docker/bitcoind:0.11.2.bu
+
+[gandrewstone/BitcoinUnlimited](https://github.com/gandrewstone/BitcoinUnlimited/tree/0.11cfg_stats)
+
+```
+$ git clone --depth 1 --branch 0.11cfg_stats --single-branch https://github.com/gandrewstone/BitcoinUnlimited ~/tmp/bitcoinbu-0.11.2
+$ ./build.sh
+$ docker images | grep 0.11.2.bu         
+y12docker/bitcoind              0.11.2.bu           2f32a0373437        6 minutes ago       17.93 MB
+$ docker run y12docker/bitcoind:0.11.2.bu bitcoind --version
+Bitcoin Core Daemon version v0.11.2.0-b440a4f
+Copyright (C) 2009-2015 The Bitcoin Unlimited Developers
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.2.bu bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                          COMMAND                  CREATED             STATUS              PORTS                              NAMES
+8eaf306e0014        y12docker/bitcoind:0.11.2.bu   "bitcoind -conf=/btc/"   5 seconds ago       Up 5 seconds        0.0.0.0:8332-8333->8332-8333/tcp   reverent_meninsky
+$ alias bc='docker exec 8eaf306e0014 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+    "version" : 110200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 32,
+    "timeoffset" : 0,
+    "connections" : 2,
+    "proxy" : "",
+    "difficulty" : 1.00000000,
+    "testnet" : false,
+    "keypoololdest" : 1450949722,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00005000,
+    "errors" : ""
+}
+$ bc getblockchaininfo
+{
+    "chain" : "main",
+    "blocks" : 160,
+    "headers" : 22000,
+    "bestblockhash" : "000000002819c10868c6cf2347766dbd0c6e6502dec7346edf57458cc058c026",
+    "difficulty" : 1.00000000,
+    "verificationprogress" : 0.00000072,
+    "chainwork" : "000000000000000000000000000000000000000000000000000000a100a100a1",
+    "pruned" : false,
+    "softforks" : [
+        {
+            "id" : "bip34",
+            "version" : 2,
+            "enforce" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 750,
+                "window" : 1000
+            },
+            "reject" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 950,
+                "window" : 1000
+            }
+        },
+        {
+            "id" : "bip66",
+            "version" : 3,
+            "enforce" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 750,
+                "window" : 1000
+            },
+            "reject" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 950,
+                "window" : 1000
+            }
+        },
+        {
+            "id" : "bip65",
+            "version" : 4,
+            "enforce" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 750,
+                "window" : 1000
+            },
+            "reject" : {
+                "status" : false,
+                "found" : 0,
+                "required" : 950,
+                "window" : 1000
+            }
+        }
+    ]
+}
+$ bc getnetworkinfo
+{
+    "version" : 110200,
+    "subversion" : "/BitcoinUnlimited:0.11.2/",
+    "protocolversion" : 70002,
+    "localservices" : "0000000000000001",
+    "timeoffset" : 0,
+    "connections" : 6,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00005000,
+    "localaddresses" : [
+    ]
+}
+
+$ docker push y12docker/bitcoind:0.11.2.bu
+
+```
 
 docker image y12docker/bitcoind:0.11d.xt
 
