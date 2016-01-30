@@ -1,6 +1,39 @@
 build bitcoin core/xt/bu
 ======
 
+docker image y12docker/bitcoind:0.12.0rc2.core
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.12.0rc2.tar.gz | tar xvz -C ~/tmp
+$ docker images | grep core
+y12docker/bitcoind              0.12.0rc2.core      52629644a2f2        38 seconds ago      17.87 MB
+$ docker run y12docker/bitcoind:0.12.0rc2.core bitcoind --version
+Bitcoin Core Daemon version v0.12.0.0-g1bc1d79
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.12.0rc2.core bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                               COMMAND                  CREATED             STATUS              PORTS                              NAMES
+038a1d8a89ae        y12docker/bitcoind:0.12.0rc2.core   "bitcoind -conf=/btc/"   4 seconds ago       Up 3 seconds        0.0.0.0:8332-8333->8332-8333/tcp   furious_ardinghelli
+$ alias bc='docker exec 038a1d8a89ae bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 2480,
+  "timeoffset": -1,
+  "connections": 6,
+  "proxy": "",
+  "difficulty": 1,
+  "testnet": false,
+  "keypoololdest": 1454140868,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+$ docker push y12docker/bitcoind:0.12.0rc2.core
+```
+
 docker image y12docker/bitcoind:0.11.2.bu
 
 [gandrewstone/BitcoinUnlimited](https://github.com/gandrewstone/BitcoinUnlimited/tree/0.11cfg_stats)
