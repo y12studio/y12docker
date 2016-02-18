@@ -1,6 +1,90 @@
 build bitcoin core/xt/bu
 ======
 
+docker image y12docker/bitcoind:0.11.2.cl1
+
+```
+$ wget -qO- https://github.com/bitcoinclassic/bitcoinclassic/archive/v0.11.2.cl1.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep cl
+y12docker/bitcoind              0.11.2.cl1          03a4886d9660        19 seconds ago      17.87 MB
+$ docker run y12docker/bitcoind:0.11.2.cl1 bitcoind --version
+Bitcoin Classic Daemon version v0.11.2.0-g27057bb
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.11.2.cl1 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
+aa057cd65a49        y12docker/bitcoind:0.11.2.cl1   "bitcoind -conf=/btc/"   22 seconds ago      Up 21 seconds       0.0.0.0:8332-8333->8332-8333/tcp   stoic_brown
+$ alias bc='docker exec aa057cd65a49 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+    "version" : 110200,
+    "protocolversion" : 70002,
+    "walletversion" : 60000,
+    "balance" : 0.00000000,
+    "blocks" : 57845,
+    "timeoffset" : 0,
+    "connections" : 8,
+    "proxy" : "",
+    "difficulty" : 11.84622815,
+    "testnet" : false,
+    "keypoololdest" : 1455713286,
+    "keypoolsize" : 101,
+    "paytxfee" : 0.00000000,
+    "relayfee" : 0.00005000,
+    "errors" : ""
+}
+$ bc getnetworkinfo
+{
+    "version" : 110200,
+    "subversion" : "/Classic:0.11.2/",
+    "protocolversion" : 70002,
+    "localservices" : "0000000000000001",
+    "timeoffset" : 0,
+    "connections" : 8,
+    "networks" : [
+        {
+            "name" : "ipv4",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "ipv6",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        },
+        {
+            "name" : "onion",
+            "limited" : false,
+            "reachable" : false,
+            "proxy" : "",
+            "proxy_randomize_credentials" : false
+        }
+    ],
+    "relayfee" : 0.00005000,
+    "localaddresses" : [
+    ]
+}
+$ docker push y12docker/bitcoind:0.11.2.cl1
+
+```
+
+docker image y12docker/bitcoind:0.12.0rc5.core
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.12.0rc5.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep core
+y12docker/bitcoind              0.12.0rc5.core      e3921b4c4f02        19 minutes ago      17.87 MB
+y12docker/bitcoind              0.12.0rc2.core      5703c45b2b76        2 weeks ago         17.87 MB
+y12docker/bitcoind              0.11.2.core         461063d8f0c9        3 months ago        17.85 MB
+y12docker/bitcoind              0.11.1.core         b78e45d78a88        4 months ago        17.83 MB
+$ docker push y12docker/bitcoind:0.12.0rc5.core
+```
+
 docker image y12docker/bitcoind:0.12.0rc2.core
 ```
 $ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.12.0rc2.tar.gz | tar xvz -C ~/tmp

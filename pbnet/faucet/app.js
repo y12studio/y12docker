@@ -55,7 +55,6 @@ function reqFaucet(req, res, next) {
         });
         next();
     });
-
 }
 
 function reqBroadcast(req, res, next) {

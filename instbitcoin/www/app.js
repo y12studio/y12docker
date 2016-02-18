@@ -128,7 +128,7 @@ am.controller('AppCtrl', function($scope, $resource, $http, dataSrv, bcSrv) {
 
     $scope.sendto = {
         address: 'n2NR5q7Sffy8KdfPKkBxxjejMrSM8HFNVk',
-        amount: 190000,
+        amount: 19680000,
     };
 
     $scope.getAddress();

@@ -1,5 +1,22 @@
 build docker image
 ```
+$ docker version
+Client:
+ Version:      1.8.1
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   d12ea79
+ Built:        Thu Aug 13 02:35:49 UTC 2015
+ OS/Arch:      linux/amd64
+
+Server:
+ Version:      1.8.1
+ API version:  1.20
+ Go version:   go1.4.2
+ Git commit:   d12ea79
+ Built:        Thu Aug 13 02:35:49 UTC 2015
+ OS/Arch:      linux/amd64
+
 $ docker build -t y12docker/instbitcoin:0.11.0.a .
 $ docker run y12docker/instbitcoin:0.11.0.a bitcoind --version
 Bitcoin Core Daemon version v0.11.0.0-gd26f951

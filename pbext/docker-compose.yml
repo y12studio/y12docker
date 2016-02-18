@@ -1,5 +1,5 @@
 seed2taipei:
-    image: y12docker/bitcoind:0.10.1
+    image: y12docker/bitcoind:0.10.2
     volumes:
         - blockchain/taipei:/btc/data
     command: >
@@ -8,7 +8,7 @@ seed2taipei:
         -rpcallowip=172.17.0.0/16 -rpcport=18332
 
 seed2taichung:
-    image: y12docker/bitcoind:0.10.1
+    image: y12docker/bitcoind:0.10.2
     volumes:
         - blockchain/taichung:/btc/data
     command: >
@@ -17,7 +17,7 @@ seed2taichung:
         -rpcallowip=172.17.0.0/16 -rpcport=18332
 
 keeper2taipei:
-    image: y12docker/bitcoind:0.10.1
+    image: y12docker/bitcoind:0.10.2
     links:
         - seed2taipei
     command: >
@@ -27,7 +27,7 @@ keeper2taipei:
         -rpcallowip=172.17.0.0/16 -rpcport=18332
 
 keeper2taichung:
-    image: y12docker/bitcoind:0.10.1
+    image: y12docker/bitcoind:0.10.2
     links:
         - seed2taipei
     command: >

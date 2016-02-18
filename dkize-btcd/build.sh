@@ -6,13 +6,16 @@ set -x
 SCRIPTPATH=$( cd "$(dirname "$0")" ; pwd -P )
 #VERSION=bitcoinbu-0.11.2
 #VERSION=bitcoinxt-0.11D
-VERSION=bitcoin-0.12.0rc2
+#VERSION=bitcoin-0.12.0rc5
+VERSION=bitcoinclassic-0.11.2.cl1
 # DKTAG=0.11.2.bu
 # DKTAG=0.11d.xt
-DKTAG=0.12.0rc2.core
+# DKTAG=0.12.0rc5.core
+DKTAG=0.11.2.cl1
 DIRBUILD=~/tmp/bitcoin
 #
 # wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.11.1.tar.gz | tar xvz -C ~/tmp
+# wget -qO- https://github.com/bitcoinclassic/bitcoinclassic/archive/v0.11.2.cl1.tar.gz | tar xvz -C ~/tmp
 # git clone --depth 1 --branch 0.11B --single-branch https://github.com/bitcoinxt/bitcoinxt ~/tmp/bitcoinxt-0.11B
 # git clone --depth 1 --branch 0.11cfg_stats --single-branch https://github.com/gandrewstone/BitcoinUnlimited ~/tmp/bitcoinbu-0.11.2
 rm -rf ${DIRBUILD}
