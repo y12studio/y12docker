@@ -1,6 +1,187 @@
 build bitcoin core/xt/bu
 ======
 
+docker image y12docker/bitcoind:0.12.0.core
+
+```
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.12.0.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep core
+y12docker/bitcoind              0.12.0.core         59752f001cce        56 seconds ago      17.88 MB
+y12docker/bitcoind              0.12.0rc5.core      e3921b4c4f02        38 hours ago        17.87 MB
+y12docker/bitcoind              0.12.0rc2.core      5703c45b2b76        2 weeks ago         17.87 MB
+y12docker/bitcoind              0.11.2.core         461063d8f0c9        3 months ago        17.85 MB
+y12docker/bitcoind              0.11.1.core         b78e45d78a88        4 months ago        17.83 MB
+$ docker run y12docker/bitcoind:0.12.0.core bitcoind --version
+Bitcoin Core Daemon version v0.12.0.0-g188ca9c
+
+$ mkdir -p btc/data
+$ echo -e "rpcuser=user\\nrpcpassword=pass\\nprune=2048\\n" > btc/bitcoin.conf
+$ cat btc/bitcoin.conf
+rpcuser=user
+rpcpassword=pass
+prune=2048
+$ docker run -d -p 8333:8333 -p 8332:8332 -v $PWD/btc:/btc y12docker/bitcoind:0.12.0.core bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS              PORTS                              NAMES
+7dd5513e9ea5        y12docker/bitcoind:0.12.0.core   "bitcoind -conf=/btc/"   9 seconds ago       Up 8 seconds        0.0.0.0:8332-8333->8332-8333/tcp   modest_raman
+$ alias bc='docker exec 7dd5513e9ea5 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo && bc getblockchaininfo && sudo du -h btc/data && date
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 68368,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 45.38582234101263,
+  "testnet": false,
+  "keypoololdest": 1455847122,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+{
+  "chain": "main",
+  "blocks": 68368,
+  "headers": 399103,
+  "bestblockhash": "00000000025b49a09c5799d27445a7f1287ab10f4de3ee086171e32a090f3a97",
+  "difficulty": 45.38582234101263,
+  "mediantime": 1279273433,
+  "verificationprogress": 0.0003572843855920218,
+  "chainwork": "000000000000000000000000000000000000000000000000000652214c96b583",
+  "pruned": true,
+  ...
+  "pruneheight": 0
+}
+208K    btc/data/database
+20K     btc/data/blocks/index
+37M     btc/data/blocks
+20K     btc/data/chainstate
+51M     btc/data
+Fri Feb 19 10:04:40 CST 2016
+
+$ bc getinfo && bc getblockchaininfo && sudo du -h btc/data && date
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 132638,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 876954.4935135372,
+  "testnet": false,
+  "keypoololdest": 1455847122,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+{
+  "chain": "main",
+  "blocks": 132769,
+  "headers": 399103,
+  "bestblockhash": "000000000000047281d5b0f2e3eec7e8d0b6b4e7741c020b101bd52bc24b030f",
+  "difficulty": 876954.4935135372,
+  "mediantime": 1308816435,
+  "verificationprogress": 0.003456508995790744,
+  "chainwork": "00000000000000000000000000000000000000000000000152ae3a625a7bfd4a",
+  "pruned": true,
+  ..
+  "pruneheight": 0
+}
+212K    btc/data/database
+49M     btc/data/blocks/index
+392M    btc/data/blocks
+18M     btc/data/chainstate
+438M    btc/data
+Fri Feb 19 10:09:04 CST 2016
+
+$ bc getinfo && bc getblockchaininfo && sudo du -h btc/data && date
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 186618,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 1726566.55919348,
+  "testnet": false,
+  "keypoololdest": 1455847122,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+{
+  "chain": "main",
+  "blocks": 186636,
+  "headers": 399105,
+  "bestblockhash": "00000000000005d34221a0d9e66509f8335ce009a8a5e1091fd0589dcad0de7d",
+  "difficulty": 1726566.55919348,
+  "mediantime": 1340896318,
+  "verificationprogress": 0.01891650050936363,
+  "chainwork": "00000000000000000000000000000000000000000000001409ef191c542a9804",
+  "pruned": true,
+ ..
+  "pruneheight": 120108
+}
+244K    btc/data/database
+99M     btc/data/blocks/index
+2.1G    btc/data/blocks
+85M     btc/data/chainstate
+2.2G    btc/data
+Fri Feb 19 10:25:45 CST 2016
+
+$ bc getinfo && bc getblockchaininfo && sudo du -h btc/data && date
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 303185,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 10455720138.48484,
+  "testnet": false,
+  "keypoololdest": 1455847122,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+{
+  "chain": "main",
+  "blocks": 303189,
+  "headers": 399119,
+  "bestblockhash": "0000000000000000503ee25b3141c5da9c78c2d2049e6aad6bc72a335a4149b8",
+  "difficulty": 10455720138.48484,
+  "mediantime": 1401378494,
+  "verificationprogress": 0.2171192932464616,
+  "chainwork": "000000000000000000000000000000000000000000007503ab929243a5026a00",
+  "pruned": true,
+  ...
+  "pruneheight": 295281
+}
+256K    btc/data/database
+63M     btc/data/blocks/index
+2.1G    btc/data/blocks
+677M    btc/data/chainstate
+2.8G    btc/data
+Fri Feb 19 13:21:34 CST 2016
+
+
+$ docker push y12docker/bitcoind:0.12.0.core
+```
+
 docker image y12docker/bitcoind:0.11.2.cl1
 
 ```
