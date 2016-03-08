@@ -1,5 +1,117 @@
 build bitcoin core/xt/bu
 ======
+docker image y12docker/bitcoind:0.12.0.cl1
+
+```
+$ wget -qO- https://github.com/bitcoinclassic/bitcoinclassic/archive/v0.12.0cl1.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep cl1
+y12docker/bitcoind              0.12.0.cl1          c5d9cdcffa45        47 seconds ago      17.91 MB
+y12docker/bitcoind              0.11.2.cl1          4a1e68829a61        2 weeks ago         17.87 MB
+y12docker/bitcoind              0.11.1.cl1          03a4886d9660        2 weeks ago         17.87 MB
+$ docker run y12docker/bitcoind:0.12.0.cl1 bitcoind --version
+Bitcoin Classic Daemon version v0.12.0.0-g6cebccd
+...
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.12.0.cl1 bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
+c1677d927012        y12docker/bitcoind:0.12.0.cl1   "bitcoind -conf=/btc/"   14 seconds ago      Up 13 seconds       0.0.0.0:8332-8333->8332-8333/tcp   lonely_goldberg
+$ alias bc='docker exec c1677d927012 bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+  "version": 120000,
+  "protocolversion": 70012,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 139281,
+  "timeoffset": 0,
+  "connections": 8,
+  "proxy": "",
+  "difficulty": 1888786.705353048,
+  "testnet": false,
+  "keypoololdest": 1457397092,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+$ bc getblockchaininfo
+{
+  "chain": "main",
+  "blocks": 140920,
+  "headers": 401623,
+  "bestblockhash": "000000000000017fab19329089a1ab54e1f4ab110b1ef0c5d4f9990c2815d624",
+  "difficulty": 1888786.705353048,
+  "mediantime": 1313319251,
+  "verificationprogress": 0.005214505862843848,
+  "chainwork": "0000000000000000000000000000000000000000000000045aedf12f07d5ea89",
+  "pruned": false,
+  "softforks": [
+    {
+      "id": "bip34",
+      "version": 2,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip66",
+      "version": 3,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip65",
+      "version": 4,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    }
+  ],
+  "hardforks": [
+    {
+      "id": "bip109",
+      "version": 16777216,
+      "status": {
+        "triggeredatblock": null,
+        "earliestforktime": null,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      }
+    }
+  ]
+}
+$ docker push y12docker/bitcoind:0.12.0.cl1
+```
 
 docker image y12docker/bitcoind:0.12.0.core
 
@@ -177,7 +289,6 @@ $ bc getinfo && bc getblockchaininfo && sudo du -h btc/data && date
 677M    btc/data/chainstate
 2.8G    btc/data
 Fri Feb 19 13:21:34 CST 2016
-
 
 $ docker push y12docker/bitcoind:0.12.0.core
 ```
