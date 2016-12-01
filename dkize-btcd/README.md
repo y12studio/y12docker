@@ -1,5 +1,298 @@
+docker images : https://hub.docker.com/r/y12docker/bitcoind/
+
 build the bitcoin core/classic/xt/bu
-======
+
+y12docker/bitcoind:0.12.1c.bu
+
+```
+$ date && docker -v
+Thu Dec  1 12:18:33 CST 2016
+Docker version 1.12.3, build 6b644ec
+$ wget -qO- https://github.com/BitcoinUnlimited/BitcoinUnlimited/archive/bu0.12.1c.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep bu
+y12docker/bitcoind              0.12.1c.bu           a2f749bce2d1        34 seconds ago      18.85 MB
+y12docker/bitcoind              0.11.2.bu           2291bd3a9682        11 months ago       17.93 MB
+$ docker run y12docker/bitcoind:0.12.1c.bu bitcoind --version
+Bitcoin Unlimited Daemon version v0.12.1.0-gbd24b82
+Copyright (C) 2009-2016 The Bitcoin Unlimited Developers
+
+Portions Copyright (C) 2009-2016 The Bitcoin Core Developers
+
+Portions Copyright (C) 2009-2016 The Bitcoin XT Developers
+
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.12.1c.bu bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                           COMMAND                  CREATED             STATUS              PORTS                              NAMES
+beaa3c3b499c        y12docker/bitcoind:0.12.1c.bu   "bitcoind -conf=/btc/"   3 seconds ago       Up 3 seconds        0.0.0.0:8332-8333->8332-8333/tcp   stupefied_wozniak
+$ alias bc='docker exec beaa3c3b499c bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+  "version": 120100,
+  "protocolversion": 80002,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 0,
+  "timeoffset": 0,
+  "connections": 0,
+  "proxy": "",
+  "difficulty": 1,
+  "testnet": false,
+  "keypoololdest": 1480569667,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+$ bc getinfo
+{
+  "version": 120100,
+  "protocolversion": 80002,
+  "walletversion": 60000,
+  "balance": 0.00000000,
+  "blocks": 0,
+  "timeoffset": 0,
+  "connections": 0,
+  "proxy": "",
+  "difficulty": 1,
+  "testnet": false,
+  "keypoololdest": 1480569667,
+  "keypoolsize": 101,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+lin@ubuntu73:~/git/y12docker/dkize-btcd$ bc getblockchaininfo
+{
+  "chain": "main",
+  "blocks": 0,
+  "headers": 0,
+  "bestblockhash": "000000000019d6689c085ae165831e934ff763ae46a2a6c172b3f1b60a8ce26f",
+  "difficulty": 1,
+  "mediantime": 1231006505,
+  "verificationprogress": 3.063343182599723e-09,
+  "chainwork": "0000000000000000000000000000000000000000000000000000000100010001",
+  "pruned": false,
+  "softforks": [
+    {
+      "id": "bip34",
+      "version": 2,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip66",
+      "version": 3,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip65",
+      "version": 4,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    }
+  ],
+  "bip9_softforks": [
+    {
+      "id": "csv",
+      "status": "defined"
+    }
+  ]
+}
+
+$ docker push y12docker/bitcoind:0.12.1c.bu
+
+```
+
+y12docker/bitcoind:0.13.1.core
+```
+$ date
+Thu Dec  1 12:09:15 CST 2016
+$ docker -v
+Docker version 1.12.3, build 6b644ec
+$ wget -qO- https://github.com/bitcoin/bitcoin/archive/v0.13.1.tar.gz | tar xvz -C ~/tmp
+$ ./build.sh
+$ docker images | grep core
+y12docker/bitcoind              0.13.1.core         ef9d68197c1a        About a minute ago   18 MB
+y12docker/bitcoind              0.12.1.core         5b067c5b6e4c        7 months ago         17.91 MB
+y12docker/bitcoind              0.12.0.core         59752f001cce        9 months ago         17.88 MB
+y12docker/bitcoind              0.12.0rc5.core      e3921b4c4f02        9 months ago         17.87 MB
+y12docker/bitcoind              0.12.0rc2.core      5703c45b2b76        10 months ago        17.87 MB
+y12docker/bitcoind              0.11.2.core         461063d8f0c9        12 months ago        17.85 MB
+y12docker/bitcoind              0.11.1.core         b78e45d78a88        13 months ago        17.83 MB
+$ docker run y12docker/bitcoind:0.13.1.core bitcoind --version
+Bitcoin Core Daemon version v0.13.1.0-g03422e5
+Copyright (C) 2009-2016 The Bitcoin Core developers
+$ docker run -d -p 8333:8333 -p 8332:8332 y12docker/bitcoind:0.13.1.core bitcoind -conf=/btc/bitcoin.conf -datadir=/btc/data
+$ docker ps
+CONTAINER ID        IMAGE                            COMMAND                  CREATED             STATUS              PORTS                              NAMES
+e1e1e2427c1a        y12docker/bitcoind:0.13.1.core   "bitcoind -conf=/btc/"   9 seconds ago       Up 8 seconds        0.0.0.0:8332-8333->8332-8333/tcp   big_morse
+$ alias bc='docker exec e1e1e2427c1a bitcoin-cli -conf=/btc/bitcoin.conf'
+$ bc getinfo
+{
+  "version": 130100,
+  "protocolversion": 70014,
+  "walletversion": 130000,
+  "balance": 0.00000000,
+  "blocks": 112,
+  "timeoffset": 0,
+  "connections": 1,
+  "proxy": "",
+  "difficulty": 1,
+  "testnet": false,
+  "keypoololdest": 1480565331,
+  "keypoolsize": 100,
+  "paytxfee": 0.00000000,
+  "relayfee": 0.00001000,
+  "errors": ""
+}
+$ bc getblockchaininfo
+{
+  "chain": "main",
+  "blocks": 272,
+  "headers": 36000,
+  "bestblockhash": "00000000d4e581b02a90ab3f2f45723aea64f341908a767c33968219b9900ef1",
+  "difficulty": 1,
+  "mediantime": 1231806964,
+  "verificationprogress": 8.577783984333983e-07,
+  "chainwork": "0000000000000000000000000000000000000000000000000000011101110111",
+  "pruned": false,
+  "softforks": [
+    {
+      "id": "bip34",
+      "version": 2,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip66",
+      "version": 3,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    },
+    {
+      "id": "bip65",
+      "version": 4,
+      "enforce": {
+        "status": false,
+        "found": 0,
+        "required": 750,
+        "window": 1000
+      },
+      "reject": {
+        "status": false,
+        "found": 0,
+        "required": 950,
+        "window": 1000
+      }
+    }
+  ],
+  "bip9_softforks": {
+    "csv": {
+      "status": "defined",
+      "startTime": 1462060800,
+      "timeout": 1493596800
+    },
+    "segwit": {
+      "status": "defined",
+      "startTime": 1479168000,
+      "timeout": 1510704000
+    }
+  }
+}
+
+$ bc getnetworkinfo
+{
+  "version": 130100,
+  "subversion": "/Satoshi:0.13.1/",
+  "protocolversion": 70014,
+  "localservices": "000000000000000d",
+  "localrelay": true,
+  "timeoffset": 0,
+  "connections": 1,
+  "networks": [
+    {
+      "name": "ipv4",
+      "limited": false,
+      "reachable": true,
+      "proxy": "",
+      "proxy_randomize_credentials": false
+    },
+    {
+      "name": "ipv6",
+      "limited": false,
+      "reachable": true,
+      "proxy": "",
+      "proxy_randomize_credentials": false
+    },
+    {
+      "name": "onion",
+      "limited": true,
+      "reachable": false,
+      "proxy": "",
+      "proxy_randomize_credentials": false
+    }
+  ],
+  "relayfee": 0.00001000,
+  "localaddresses": [
+  ],
+  "warnings": ""
+}
+
+$ docker push y12docker/bitcoind:0.13.1.core
+
+```
 
 docker image y12docker/bitcoind:0.12.1.core
 
