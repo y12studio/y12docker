@@ -101,3 +101,35 @@ Query Result: 960
 # pcq -c '{"Function": "query", "Args": ["b"]}'
 Query Result: 2040
 ```
+
+## membership service
+
+v0.6 (membersrvc)  https://github.com/hyperledger/fabric/tree/v0.6/membersrvc
+
+v1.0 https://github.com/hyperledger/fabric-cop
+
+```
+$ curl -O https://raw.githubusercontent.com/yeasy/docker-compose-files/master/hyperledger/0.6/noops/membersrvc.yml
+$ curl -O https://raw.githubusercontent.com/yeasy/docker-compose-files/master/hyperledger/0.6/noops/4-peers-with-membersrvc.yml
+$ docker-compose -f 4-peers-with-membersrvc.yml up -d
+Creating v2_membersrvc0_1
+Recreating v2_vp0_1
+Recreating v2_vp3_1
+Recreating v2_vp1_1
+Recreating v2_vp2_1
+2$ docker ps
+CONTAINER ID        IMAGE                                  COMMAND                  CREATED             STATUS                          PORTS                                             NAMES
+224f639b771b        hyperledger/fabric-peer:latest         "sh -c 'sleep 5; peer"   9 minutes ago       Restarting (1) 37 seconds ago   7051-7053/tcp                                     v2_vp2_1
+9284193b206c        hyperledger/fabric-peer:latest         "sh -c 'sleep 5; peer"   9 minutes ago       Restarting (1) 38 seconds ago   7051-7053/tcp                                     v2_vp1_1
+20a3f85bce74        hyperledger/fabric-peer:latest         "sh -c 'sleep 5; peer"   9 minutes ago       Restarting (1) 37 seconds ago   7051-7053/tcp                                     v2_vp3_1
+a5f9a826ae03        hyperledger/fabric-peer:latest         "sh -c 'sleep 5; peer"   9 minutes ago       Up 1 seconds                    0.0.0.0:7050-7051->7050-7051/tcp, 7052-7053/tcp   v2_vp0_1
+2cccbe743fd8        hyperledger/fabric-membersrvc:latest   "membersrvc"             9 minutes ago       Up 5 minutes                    0.0.0.0:7054->7054/tcp                            v2_membersrvc0_1
+$ alias vp0sh='docker exec -it v2_vp0_1'
+$ alias vp1sh='docker exec -it v2_vp1_1'
+$ vp0sh bash
+Error response from daemon: Container a5f9a826ae032e0f8e7ae7fd3d866a2b46c38c6769bf7740ded94674752dc074 is restarting, wait until the container is running
+
+$ vp0sh peer network list
+Error response from daemon: Container a5f9a826ae032e0f8e7ae7fd3d866a2b46c38c6769bf7740ded94674752dc074 is restarting, wait until the container is running
+
+```
