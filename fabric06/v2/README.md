@@ -72,3 +72,32 @@ Query Result: 6090
 # pcq -c '{"Function": "query", "Args": ["b"]}'
 Query Result: 6210
 ```
+
+cp -R chaincode_example02 foo
+
+```
+$ vp0sh
+root@vp0:/opt/gopath/src/github.com/hyperledger/fabric
+# cd examples/chaincode/go
+# pwd
+/opt/gopath/src/github.com/hyperledger/fabric/examples/chaincode/go
+# cp -R chaincode_example02 foo
+# cd foo
+# mv chaincode_example02.go foo.go
+# sed -i 's|Aval = Aval - X|Aval = Aval - X + 10|g' foo.go
+# sed -i 's|Bval = Bval + X|Bval = Bval + X - 10|g' foo.go
+# peer chaincode deploy -p github.com/hyperledger/fabric/examples/chaincode/go/foo -c '{"Function":"init", "Args": ["a","1000", "b", "2000"]}'
+Deploy chaincode: 569a44e3a2c135a6932c8b74b416078e99a48bfae625528a41b9233472094643559c654d1a740a667166d418f28ff0ddea754f5f1a9c98c5f17db514aa848005
+# alias pcq='peer chaincode query -n 569a44e3a2c135a6932c8b74b416078e99a48bfae625528a41b9233472094643559c654d1a740a667166d418f28ff0ddea754f5f1a9c98c5f17db514aa848005'
+# alias pci='peer chaincode invoke -l golang -n 569a44e3a2c135a6932c8b74b416078e99a48bfae625528a41b9233472094643559c654d1a740a667166d418f28ff0ddea754f5f1a9c98c5f17db514aa848005'
+# pcq -c '{"Function": "query", "Args": ["a"]}'
+Query Result: 1000
+# pcq -c '{"Function": "query", "Args": ["b"]}'
+Query Result: 2000
+# pci -c '{"Args": ["invoke", "a", "b", "50"]}'
+
+# pcq -c '{"Function": "query", "Args": ["a"]}'
+Query Result: 960
+# pcq -c '{"Function": "query", "Args": ["b"]}'
+Query Result: 2040
+```
