@@ -1,0 +1,24 @@
+vp0:
+  image: hyperledger/fabric-peer
+  environment:
+    - CORE_PEER_ID=vp0
+    - CORE_PEER_ADDRESSAUTODETECT=true
+    - CORE_VM_ENDPOINT=http://172.17.0.1:2375
+    - CORE_LOGGING_LEVEL=INFO
+  command: peer node start
+vp1:
+  extends:
+    service: vp0
+  environment:
+    - CORE_PEER_ID=vp1
+    - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+  links:
+    - vp0
+vp2:
+  extends:
+    service: vp0
+  environment:
+    - CORE_PEER_ID=vp2
+    - CORE_PEER_DISCOVERY_ROOTNODE=vp0:7051
+  links:
+    - vp0
